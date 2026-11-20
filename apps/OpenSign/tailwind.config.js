@@ -80,48 +80,44 @@ module.exports = {
     themes: [
       {
         opensigndark: {
-          primary: "#00477B",
-          "primary-content": "#FFFFFF",
+          primary: "#60A7D6",
+          "primary-content": "#09131A",
 
-          secondary: "#00477B",
-          "secondary-content": "#FFFFFF",
+          secondary: "#16275C",
+          "secondary-content": "#F7F9FC",
 
           accent: "#B00000",
           "accent-content": "#FFFFFF",
 
-          neutral: "#09131A",
-          "neutral-content": "#ECF3F8",
+          neutral: "#142942",
+          "neutral-content": "#f1f5fa",
 
-          "base-100": "#09131A",
-          "base-200": "#09131A",
-          "base-300": "#67737C",
-          "base-content": "#ECF3F8",
+          "base-100": "#16263b",
+          "base-200": "#0b2347",
+          "base-300": "#294764",
+          "base-content": "#f1f5fa",
 
-          info: "#00477B",
-          "info-content": "#FFFFFF",
-          success: "#00477B",
-          "success-content": "#FFFFFF",
-          warning: "#B00000",
-          "warning-content": "#FFFFFF",
-          error: "#B00000",
-          "error-content": "#FFFFFF",
+          info: "#2b6099",
+          success: "#4a8fca",
+          warning: "#e2657b",
+          error: "#f07b8e",
 
           "--rounded-btn": "0.7rem",
           "--tab-border": "2px",
           "--tab-radius": "0.7rem",
 
           // Custom CSS variables for icon and button states
-          "--icon-color": "#ECF3F8",
-          "--icon-color-muted": "#D8DFE4",
-          "--icon-color-disabled": "#67737C",
-          "--btn-disabled-bg": "#67737C",
-          "--btn-disabled-color": "#FFFFFF",
-          "--btn-disabled-border": "#67737C",
+          "--icon-color": "#f1f5fa",
+          "--icon-color-muted": "#b3c1d2",
+          "--icon-color-disabled": "#788da7",
+          "--btn-disabled-bg": "#294764",
+          "--btn-disabled-color": "#b3c1d2",
+          "--btn-disabled-border": "#456483",
 
           // Optional polish
           "--navbar-padding": "0.8rem",
-          "--border-color": "#67737C",
-          "--tooltip-color": "#09131A"
+          "--border-color": "#456483",
+          "--tooltip-color": "#06162f"
         }
       },
       {
@@ -138,12 +134,12 @@ module.exports = {
           "base-200": "#ECF3F8",
           "base-300": "#D8DFE4",
           "base-content": "#09131A",
-          info: "#00477B",
-          "info-content": "#FFFFFF",
-          success: "#00477B",
-          "success-content": "#FFFFFF",
-          warning: "#B00000",
-          "warning-content": "#FFFFFF",
+          info: "#2b6099",
+          "info-content": "#f7f9fc",
+          success: "#4a8fca",
+          "success-content": "#f7f9fc",
+          warning: "#e2657b",
+          "warning-content": "#142942",
           error: "#B00000",
           "error-content": "#FFFFFF",
           "--rounded-btn": "0.7rem",
