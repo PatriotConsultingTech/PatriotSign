@@ -124,7 +124,6 @@ export const config = {
   allowExpiredAuthDataToken: false,
   enableInsecureAuthAdapters: false,
   databaseOptions: { allowPublicExplain: false },
-  encodeParseObjectInCloudFunction: true,
   ...(isMailAdapter === true
     ? {
       emailAdapter: {
