@@ -8,14 +8,14 @@ async function AuthLoginAsMail(request) {
     const APPID = serverAppId;
     const masterKEY = process.env.MASTER_KEY;
 
-    let otpN = request.params.otp;
-    let email = request.params.email;
+    const otpN = request.params.otp;
+    const email = request.params.email;
 
     let message;
     // the code must be current, unexpired and within the attempt limit; it works once
     const isValidOtp = await verifyOtp(email, otpN);
     if (isValidOtp) {
-      var result = await getToken(request);
+      const result = await getToken(request);
       if (result && !result?.emailVerified) {
         const userQuery = new Parse.Query(Parse.User);
         const user = await userQuery.get(result?.objectId, {
@@ -36,7 +36,7 @@ async function AuthLoginAsMail(request) {
 
       async function getToken(request) {
         return new Promise(function (resolve, reject) {
-          var query = new Parse.Query(Parse.User);
+          const query = new Parse.Query(Parse.User);
           query.equalTo('email', email);
           query
             .first({ useMasterKey: true })

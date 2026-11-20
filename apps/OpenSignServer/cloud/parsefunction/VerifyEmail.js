@@ -5,8 +5,8 @@ export default async function VerifyEmail(request) {
     if (!request?.user) {
       throw new Parse.Error(Parse.Error.INVALID_SESSION_TOKEN, 'User is not authenticated.');
     } else {
-      let otpN = request.params.otp;
-      let email = request.params.email;
+      const otpN = request.params.otp;
+      const email = request.params.email;
 
       // the code must be current, unexpired and within the attempt limit; it works once
       const res = await verifyOtp(email, otpN);
