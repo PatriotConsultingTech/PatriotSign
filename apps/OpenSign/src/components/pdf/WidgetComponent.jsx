@@ -42,7 +42,9 @@ function WidgetComponent(props) {
   ];
 
   // Create all drag refs in one go
+  // draggableItems is a fixed list, so the hook runs the same number of times on every render.
   const widgetRefs = draggableItems.map((item) =>
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useWidgetDrag({ type: "BOX", ...item })
   );
 
