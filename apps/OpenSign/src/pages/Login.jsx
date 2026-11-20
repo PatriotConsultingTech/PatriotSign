@@ -426,7 +426,6 @@ function Login() {
               <div className="os-rail-copy">
                 <h2>
                   <span>{t("sign-documents")}</span>
-                  <span>{t("securely-simply")}</span>
                 </h2>
                 <p>{t("login-hero-description")}</p>
               </div>
