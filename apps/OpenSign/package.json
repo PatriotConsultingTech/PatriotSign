@@ -77,7 +77,7 @@
     "regex-parser": "^2.3.1",
     "web-vitals": "^5.2.0",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz",
-    "zod": "^3.22.4",
+    "zod": "^4.6.7",
     "zustand": "^4.5.1"
   },
   "scripts": {
@@ -161,7 +161,8 @@
     "@graphql-tools/utils": "12.1.0",
     "@intlify/shared": "11.4.14",
     "@intlify/core-base": "^11.4.14",
-    "vue-i18n": "^11.4.14"
+    "vue-i18n": "^11.4.14",
+    "zod": "$zod"
   },
   "engines": {
     "node": "18 || 20 || 22"
