@@ -64,7 +64,7 @@ export const OPEN_SIGN_RUNTIME_CONFIG = Object.freeze({
     darkLogoUrl: "",
     faviconUrl: "",
     fontCssUrl: "",
-    pdfFontUrl: ""
+    pdfFontUrl: "/fonts/times.ttf"
   },
   theme: {
     light: {},
@@ -137,7 +137,7 @@ const DISABLED_RUNTIME_ASSETS = Object.freeze({
   darkLogoUrl: "",
   faviconUrl: "",
   fontCssUrl: "",
-  pdfFontUrl: ""
+  pdfFontUrl: "/fonts/times.ttf"
 });
 
 const DISABLED_RUNTIME_AUTH = Object.freeze({
