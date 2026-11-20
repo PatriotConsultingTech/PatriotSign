@@ -60,7 +60,7 @@ async function unlinkFile(path) {
   if (fs.existsSync(path)) {
     try {
       fs.unlinkSync(path);
-    } catch (err) {
+    } catch {
       console.log('Err in unlink file: ', path);
     }
   }
@@ -70,10 +70,9 @@ async function unlinkFile(path) {
 async function uploadFile(pdfName, filepath) {
   try {
     const filedata = fs.readFileSync(filepath);
-    let fileUrl;
 
     const fileRes = await parseUploadFile(pdfName, filedata, 'application/pdf');
-    fileUrl = getSecureUrl(fileRes?.url)?.url;
+    const fileUrl = getSecureUrl(fileRes?.url)?.url;
 
     return { imageUrl: fileUrl };
   } catch (err) {
@@ -92,8 +91,7 @@ async function updateDoc(
   data,
   className,
   sign,
-  documentHash,
-  activity
+  documentHash
 ) {
   try {
     const UserPtr = { __type: 'Pointer', className: className, objectId: userId };
@@ -138,7 +136,7 @@ async function updateDoc(
     if (documentHash && isCompleted) {
       body.DocumentHash = documentHash;
     }
-    const signedRes = await axios.put(`${docUrl}/${docId}`, body, { headers });
+    await axios.put(`${docUrl}/${docId}`, body, { headers });
     return {
       isCompleted: isCompleted,
       message: 'success',
@@ -207,7 +205,7 @@ async function sendCompletedMail(obj) {
     const isOwnerExistsinSigners = doc?.Signers?.find(x => x.Email === sender.Email);
     signersMail = isOwnerExistsinSigners
       ? doc?.Signers?.map(x => x?.Email)?.join(',')
-      : [...doc?.Signers?.map(x => x?.Email), sender.Email]?.join(',');
+      : [...doc.Signers.map(x => x?.Email), sender.Email]?.join(',');
   } else {
     signersMail = sender.Email;
   }
@@ -301,7 +299,7 @@ async function sendCompletedMail(obj) {
     if (res?.status !== 'success') {
       unlinkFile(`./exports/signed_certificate_${doc.objectId}.pdf`);
     }
-  } catch (err) {
+  } catch {
     unlinkFile(`./exports/signed_certificate_${doc.objectId}.pdf`);
   }
 }
@@ -395,7 +393,7 @@ async function PDF(req) {
     const mailProvider = req.params.mailProvider || '';
     const sign = req.params.signature || '';
     const auditActivity = 'Signed';
-    let publicUrl = req.headers.public_url;
+    const publicUrl = req.headers.public_url;
     // below bode is used to get info of docId
     const docQuery = new Parse.Query('contracts_Document');
     docQuery.include('ExtUserPtr,Signers,ExtUserPtr.TenantId,Bcc,Cc,CreatedBy');
@@ -493,7 +491,6 @@ async function PDF(req) {
       const docName = _resDoc?.Name?.replace(/[^a-zA-Z0-9._-]/g, '_')?.toLowerCase();
       const filename = docName?.length > 100 ? docName?.slice(0, 100) : docName;
       const name = `${filename}_${randomNumber}.pdf`;
-      let filePath = `./exports/${name}`;
       let signedFilePath = `./exports/signed_${name}`;
       let pdfSize = PdfBuffer.length;
       let documentHash;

@@ -1,4 +1,3 @@
-import crypto from 'node:crypto';
 export default async function loginUser(request) {
   const username = request.params.email;
   const password = request.params.password;

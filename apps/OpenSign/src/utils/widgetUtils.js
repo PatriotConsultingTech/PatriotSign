@@ -317,12 +317,15 @@ export const getDatePickerDate = (selectedDate, format = "dd-MM-yyyy") => {
     return;
   }
   if (format && format === "dd-MM-yyyy") {
+    // eslint-disable-next-line no-unsafe-optional-chaining -- preserves existing behavior (throws on undefined as before)
     const [day, month, year] = selectedDate?.split("-");
     date = new Date(`${year}-${month}-${day}`);
   } else if (format && format === "dd.MM.yyyy") {
+    // eslint-disable-next-line no-unsafe-optional-chaining -- preserves existing behavior (throws on undefined as before)
     const [day, month, year] = selectedDate?.split(".");
     date = new Date(`${year}.${month}.${day}`);
   } else if (format && format === "dd/MM/yyyy") {
+    // eslint-disable-next-line no-unsafe-optional-chaining -- preserves existing behavior (throws on undefined as before)
     const [day, month, year] = selectedDate?.split("/");
     date = new Date(`${year}/${month}/${day}`);
   } else {

@@ -1,5 +1,5 @@
 async function ContactbookAftersave(request) {
-  /* In beforesave or aftersave if you want to check if an object is being inserted or updated 
+  /* In beforesave or aftersave if you want to check if an object is being inserted or updated
     you can check as follows */
   if (!request.original) {
     const user = request.user;

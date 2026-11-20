@@ -15,7 +15,7 @@ async function sendMailProvider(req) {
     let mailgunClient;
     let mailgunDomain;
     if (smtpenable) {
-      let transporterConfig = {
+      const transporterConfig = {
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT || 465,
         secure: smtpsecure,

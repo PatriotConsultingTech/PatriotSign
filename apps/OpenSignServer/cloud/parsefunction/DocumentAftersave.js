@@ -8,9 +8,8 @@ async function DocumentAftersave(request) {
       const folder = obj?.get?.('Type');
       const ip = request?.headers?.['x-real-ip'] || '';
       const originIp = obj?.get?.('OriginIp') || '';
-      let persistedDocument = obj;
       if (createdAt) {
-        persistedDocument = await updateDocumentMeta({ objId, createdAt, folder, ip, originIp });
+        await updateDocumentMeta({ objId, createdAt, folder, ip, originIp });
       }
 
       const signers = obj?.get?.('Signers');

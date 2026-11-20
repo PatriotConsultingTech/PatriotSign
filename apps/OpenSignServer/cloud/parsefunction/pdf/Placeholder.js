@@ -103,7 +103,7 @@ export const Placeholder = ({
     doc.catalog.set(PDFName.of('AcroForm'), acroFormRef);
   }
 
-  let sigFlags = acroForm.has(PDFName.of('SigFlags'))
+  const sigFlags = acroForm.has(PDFName.of('SigFlags'))
     ? acroForm.get(PDFName.of('SigFlags'))
     : PDFNumber.of(0);
 
@@ -112,7 +112,7 @@ export const Placeholder = ({
   );
   acroForm.set(PDFName.of('SigFlags'), updatedFlags);
 
-  let fields = acroForm.get(PDFName.of('Fields'));
+  const fields = acroForm.get(PDFName.of('Fields'));
   if (fields instanceof PDFArray) {
     fields.push(widgetDictRef);
   }

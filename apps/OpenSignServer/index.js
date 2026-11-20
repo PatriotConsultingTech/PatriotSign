@@ -46,7 +46,7 @@ if (useLocal !== 'true') {
       },
     };
     fsAdapter = new S3Adapter(s3Options);
-  } catch (err) {
+  } catch {
     console.log('Please provide AWS credintials in env file! Defaulting to local storage.');
     fsAdapter = new FSFilesAdapter({
       filesSubDirectory: 'files', // optional, defaults to ./files
@@ -64,7 +64,7 @@ let mailgunDomain;
 let isMailAdapter = false;
 if (smtpenable) {
   try {
-    let transporterConfig = {
+    const transporterConfig = {
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT || 465,
       secure: smtpsecure,
@@ -96,7 +96,7 @@ if (smtpenable) {
     });
     mailgunDomain = process.env.MAILGUN_DOMAIN;
     isMailAdapter = true;
-  } catch (error) {
+  } catch {
     isMailAdapter = false;
     console.log('Please provide valid Mailgun credentials');
   }
@@ -127,37 +127,37 @@ export const config = {
   encodeParseObjectInCloudFunction: true,
   ...(isMailAdapter === true
     ? {
-        emailAdapter: {
-          module: 'parse-server-api-mail-adapter',
-          options: {
-            // The email address from which emails are sent.
-            sender: deploymentSenderName + ' <' + mailsender + '>',
-            // The email templates.
-            templates: {
-              // The template used by Parse Server to send an email for password
-              // reset; this is a reserved template name.
-              passwordResetEmail: {
-                subjectPath: './files/password_reset_email_subject.txt',
-                textPath: './files/password_reset_email.txt',
-                htmlPath: './files/password_reset_email.html',
-              },
-              // The template used by Parse Server to send an email for email
-              // address verification; this is a reserved template name.
-              verificationEmail: {
-                subjectPath: './files/verification_email_subject.txt',
-                textPath: './files/verification_email.txt',
-                htmlPath: './files/verification_email.html',
-              },
+      emailAdapter: {
+        module: 'parse-server-api-mail-adapter',
+        options: {
+          // The email address from which emails are sent.
+          sender: deploymentSenderName + ' <' + mailsender + '>',
+          // The email templates.
+          templates: {
+            // The template used by Parse Server to send an email for password
+            // reset; this is a reserved template name.
+            passwordResetEmail: {
+              subjectPath: './files/password_reset_email_subject.txt',
+              textPath: './files/password_reset_email.txt',
+              htmlPath: './files/password_reset_email.html',
             },
-            apiCallback: async ({ payload, locale }) => {
-              if (mailgunClient) {
-                const mailgunPayload = ApiPayloadConverter.mailgun(payload);
-                await mailgunClient.messages.create(mailgunDomain, mailgunPayload);
-              } else if (transporterMail) await transporterMail.sendMail(payload);
+            // The template used by Parse Server to send an email for email
+            // address verification; this is a reserved template name.
+            verificationEmail: {
+              subjectPath: './files/verification_email_subject.txt',
+              textPath: './files/verification_email.txt',
+              htmlPath: './files/verification_email.html',
             },
           },
+          apiCallback: async ({ payload }) => {
+            if (mailgunClient) {
+              const mailgunPayload = ApiPayloadConverter.mailgun(payload);
+              await mailgunClient.messages.create(mailgunDomain, mailgunPayload);
+            } else if (transporterMail) await transporterMail.sendMail(payload);
+          },
         },
-      }
+      },
+    }
     : {}),
   filesAdapter: fsAdapter,
   auth: { google: { clientId: process.env.GOOGLE_CLIENT_ID }, sso: SSOAuth },
@@ -174,7 +174,7 @@ app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ limit: '100mb', extended: true }));
 app.use(function (req, res, next) {
   req.headers['x-real-ip'] = getUserIP(req);
-  let publicUrl = 'https://' + req?.get('host');
+  const publicUrl = 'https://' + req?.get('host');
   req.headers['public_url'] = publicUrl;
   next();
 });

@@ -7,9 +7,9 @@ async function AuthLoginAsMail(request) {
     const APPID = serverAppId;
     const masterKEY = process.env.MASTER_KEY;
 
-    let otpN = request.params.otp;
-    let otp = parseInt(otpN);
-    let email = request.params.email;
+    const otpN = request.params.otp;
+    const otp = parseInt(otpN);
+    const email = request.params.email;
 
     let message;
     //checking otp is correct or not which already save in defaultdata_Otp class
@@ -18,10 +18,10 @@ async function AuthLoginAsMail(request) {
     const res = await checkOtp.first({ useMasterKey: true });
 
     if (res !== undefined) {
-      let resOtp = res.get('OTP');
+      const resOtp = res.get('OTP');
 
       if (resOtp === otp) {
-        var result = await getToken(request);
+        const result = await getToken(request);
         if (result && !result?.emailVerified) {
           const userQuery = new Parse.Query(Parse.User);
           const user = await userQuery.get(result?.objectId, {
@@ -42,7 +42,7 @@ async function AuthLoginAsMail(request) {
 
         async function getToken(request) {
           return new Promise(function (resolve, reject) {
-            var query = new Parse.Query(Parse.User);
+            const query = new Parse.Query(Parse.User);
             query.equalTo('email', email);
             query
               .first({ useMasterKey: true })
