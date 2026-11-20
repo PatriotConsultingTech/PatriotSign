@@ -11,7 +11,7 @@ function safeUnlink(filePath, label = 'file') {
   if (fs.existsSync(filePath)) {
     try {
       fs.unlinkSync(filePath);
-    } catch (err) {
+    } catch {
       console.log(`sendMailWithAttachment unlink ${label} error`);
     }
   }
@@ -28,7 +28,7 @@ async function sendMailProvider(params) {
     let mailgunClient;
     let mailgunDomain;
     if (smtpenable) {
-      let transporterConfig = {
+      const transporterConfig = {
         host: process.env.SMTP_HOST,
         port: process.env.SMTP_PORT || 465,
         secure: smtpsecure,
@@ -56,9 +56,9 @@ async function sendMailProvider(params) {
       const randomNumber = Math.floor(Math.random() * 5000);
       const testPdf = `test_${randomNumber}.pdf`;
       try {
-        let Pdf = fs.createWriteStream(testPdf);
+        const Pdf = fs.createWriteStream(testPdf);
         const writeToLocalDisk = () => {
-          return new Promise((resolve, reject) => {
+          return new Promise((resolve) => {
             const isSecure =
               new URL(params.url)?.protocol === 'https:' &&
               new URL(params.url)?.hostname !== 'localhost';
@@ -97,15 +97,15 @@ async function sendMailProvider(params) {
         const ress = await writeToLocalDisk();
         if (ress) {
           function readTolocal() {
-            return new Promise((resolve, reject) => {
+            return new Promise((resolve) => {
               setTimeout(() => {
-                let PdfBuffer = fs.readFileSync(Pdf.path);
+                const PdfBuffer = fs.readFileSync(Pdf.path);
                 resolve(PdfBuffer);
               }, 100);
             });
           }
           //  `PdfBuffer` used to create buffer from pdf file
-          let PdfBuffer = await readTolocal();
+          const PdfBuffer = await readTolocal();
           const pdfName = params.pdfName && `${params.pdfName}.pdf`;
           const filename = params.filename;
           const file = {

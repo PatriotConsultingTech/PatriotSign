@@ -125,7 +125,7 @@ export default async function usersignup(request) {
       if (userDetails && userDetails?.timezone) {
         newObj.set('Timezone', userDetails.timezone);
       }
-      const extRes = await newObj.save(null, { useMasterKey: true });
+      await newObj.save(null, { useMasterKey: true });
       return { message: 'User sign up', sessionToken: user.sessionToken };
     }
   } catch (err) {

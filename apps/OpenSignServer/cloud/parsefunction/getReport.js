@@ -50,7 +50,7 @@ export default async function getReport(request) {
         if (_extUser?.TeamIds && _extUser.TeamIds?.length > 0) {
           // Collect ancestors efficiently + de-dupe
           const teamSet = new Set();
-          for (const team of _extUser?.TeamIds) {
+          for (const team of _extUser.TeamIds) {
             const ancestors = team.Ancestors || [];
             for (const a of ancestors) teamSet.add(a);
           }

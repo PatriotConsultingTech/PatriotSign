@@ -73,7 +73,6 @@ export default async function GenerateCertificate(docDetails) {
   const createdAt = docDetails?.DocSentAt?.iso || docDetails.createdAt;
   const createdAtperTimezone = formatDateStr(createdAt, DateFormat, timezone, Is12Hr);
   const IsEnableOTP = docDetails?.IsEnableOTP || false;
-  const placeholders = Array.isArray(docDetails?.Placeholders) ? docDetails.Placeholders : [];
   const filteredaudit = docDetails?.AuditTrail?.filter(x => {
     if (!['Signed', 'Approved'].includes(x?.Activity)) return false;
     if (!x?.UserPtr?.objectId) return false;
@@ -88,26 +87,26 @@ export default async function GenerateCertificate(docDetails) {
   const auditTrail =
     docDetails?.Signers?.length > 0
       ? filteredaudit?.map(x => {
-          const data = docDetails.Signers.find(y => y.objectId === x.UserPtr.objectId);
-          return {
-            ...data,
-            ipAddress: x.ipAddress,
-            SignedOn: x?.SignedOn || generatedUTCTime,
-            ViewedOn: x?.ViewedOn || x?.SignedOn || generatedUTCTime,
-            Signature: x?.Signature || '',
-            _signedOnTs: toTs(x?.SignedOn),
-          };
-        })
+        const data = docDetails.Signers.find(y => y.objectId === x.UserPtr.objectId);
+        return {
+          ...data,
+          ipAddress: x.ipAddress,
+          SignedOn: x?.SignedOn || generatedUTCTime,
+          ViewedOn: x?.ViewedOn || x?.SignedOn || generatedUTCTime,
+          Signature: x?.Signature || '',
+          _signedOnTs: toTs(x?.SignedOn),
+        };
+      })
       : [
-          {
-            ...docDetails.ExtUserPtr,
-            ipAddress: filteredaudit[0].ipAddress,
-            SignedOn: filteredaudit[0]?.SignedOn || generatedUTCTime,
-            ViewedOn: filteredaudit[0]?.ViewedOn || filteredaudit[0]?.SignedOn || generatedUTCTime,
-            Signature: filteredaudit[0]?.Signature || '',
-            _signedOnTs: toTs(filteredaudit[0]?.SignedOn),
-          },
-        ];
+        {
+          ...docDetails.ExtUserPtr,
+          ipAddress: filteredaudit[0].ipAddress,
+          SignedOn: filteredaudit[0]?.SignedOn || generatedUTCTime,
+          ViewedOn: filteredaudit[0]?.ViewedOn || filteredaudit[0]?.SignedOn || generatedUTCTime,
+          Signature: filteredaudit[0]?.Signature || '',
+          _signedOnTs: toTs(filteredaudit[0]?.SignedOn),
+        },
+      ];
   if (Array.isArray(auditTrail)) {
     auditTrail.sort((a, b) => (a?._signedOnTs || 0) - (b?._signedOnTs || 0));
   }

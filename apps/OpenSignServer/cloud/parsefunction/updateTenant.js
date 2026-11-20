@@ -33,27 +33,23 @@ export default async function updateTenant(request) {
   }
 
   const validKeys = ['CompletionBody', 'CompletionSubject', 'RequestBody', 'RequestSubject'];
-  try {
-    const tenant = new Parse.Object('partners_Tenant');
-    tenant.id = tenantId;
-    // Update tenant details
-    Object.keys(details).forEach(key => {
-      if (validKeys.includes(key)) {
-        if (details?.[key] !== undefined) {
-          tenant.set(key, details?.[key]);
-        } else {
-          tenant.unset(key);
-        }
+  const tenant = new Parse.Object('partners_Tenant');
+  tenant.id = tenantId;
+  // Update tenant details
+  Object.keys(details).forEach(key => {
+    if (validKeys.includes(key)) {
+      if (details?.[key] !== undefined) {
+        tenant.set(key, details?.[key]);
+      } else {
+        tenant.unset(key);
       }
-    });
-    if (details?.EmailEditorType) tenant.set('EmailEditorType', details.EmailEditorType);
-
-    const tenantRes = await tenant.save(null, { useMasterKey: true });
-    if (tenantRes) {
-      const res = JSON.parse(JSON.stringify(tenantRes));
-      return res;
     }
-  } catch (error) {
-    throw error;
+  });
+  if (details?.EmailEditorType) tenant.set('EmailEditorType', details.EmailEditorType);
+
+  const tenantRes = await tenant.save(null, { useMasterKey: true });
+  if (tenantRes) {
+    const res = JSON.parse(JSON.stringify(tenantRes));
+    return res;
   }
 }

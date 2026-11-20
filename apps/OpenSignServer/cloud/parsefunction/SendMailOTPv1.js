@@ -20,9 +20,9 @@ async function getDocument(docId) {
 }
 async function sendMailOTPv1(request) {
   try {
-    let code = Math.floor(1000 + Math.random() * 9000);
-    let email = request.params.email;
-    let TenantId = request.params.TenantId ? request.params.TenantId : undefined;
+    const code = Math.floor(1000 + Math.random() * 9000);
+    const email = request.params.email;
+    const TenantId = request.params.TenantId ? request.params.TenantId : undefined;
     const documentOwner = request.params?.docId
       ? await getDocument(request.params.docId)
       : undefined;
