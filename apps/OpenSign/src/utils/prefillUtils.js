@@ -1,3 +1,4 @@
+import Parse from "parse";
 import { SaveFileSize } from "../constant/saveFileSize";
 import {
   convertBase64ToFile,
@@ -261,7 +262,6 @@ export const handleUpdateTemplateLinks = async (
     const getPrefillData = xyPosition?.find((x) => x?.Role === "prefill");
     if (getPrefillData) {
       const prefillPlaceholder = getPrefillData?.placeHolder || [];
-      // eslint-disable-next-line no-undef -- real defect: Parse is not imported or defined globally here
       const query = new Parse.Query("contracts_templateLinks");
       const templatePtr = {
         __type: "Pointer",
@@ -272,7 +272,6 @@ export const handleUpdateTemplateLinks = async (
       query.equalTo("Type", mode);
       let templateLink = await query.first();
       if (!templateLink) {
-        // eslint-disable-next-line no-undef -- real defect: Parse is not imported or defined globally here
         templateLink = new Parse.Object("contracts_templateLinks");
         templateLink.set("Type", mode);
         templateLink.set("TemplatePtr", templatePtr);
