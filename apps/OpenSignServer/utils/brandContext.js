@@ -119,7 +119,7 @@ export function resolveDeploymentBrand(env = process.env) {
       ),
       pdfFontUrl:
         parseHttpUrl(configured('APP_PDF_FONT_URL', profile?.assets?.pdfFontUrl)) ||
-        (canonicalAppUrl ? new URL('/fonts/times.ttf', canonicalAppUrl).toString() : ''),
+        (canonicalAppUrl ? new URL('/fonts/LiberationSerif-Regular.ttf', canonicalAppUrl).toString() : ''),
       useBundledCertificateLogo:
         isOpenSign && productName === OPEN_SIGN_NAME && !env.APP_CERTIFICATE_LOGO_URL,
     }),

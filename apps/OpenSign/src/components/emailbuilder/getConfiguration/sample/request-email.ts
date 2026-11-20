@@ -16,7 +16,7 @@ const getRequestEmail = (
               props: {
                 width: null,
                 height: 50,
-                url: "/patriot-consulting-primary-logo.png",
+                url: `${window.location.origin}/patriot-consulting-primary-logo.png`,
                 alt: "logo",
                 linkHref: null,
                 contentAlignment: "middle"
