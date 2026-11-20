@@ -1,6 +1,6 @@
 import { getRuntimeConfig } from "./runtimeConfig";
 
-const OPEN_SIGN_NAME = "OpenSign™";
+const OPEN_SIGN_NAME = "PatriotSign";
 const OPEN_SIGN_EMAIL_LOGO =
   "https://qikinnovation.ams3.digitaloceanspaces.com/logo.png";
 const OPEN_SIGN_EMAIL_ACCENT = "#47a3ad";

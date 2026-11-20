@@ -54,7 +54,7 @@ const googleTagManagerId = z
 export const OPEN_SIGN_RUNTIME_CONFIG = Object.freeze({
   schemaVersion: 1,
   brandKey: "opensign",
-  productName: "OpenSign™",
+  productName: "PatriotSign",
   metaDescription: "",
   environment: "production",
   region: "global",
@@ -352,8 +352,8 @@ const createRuntimeConfigSchema = (
       brandKey: withFallback(slug, "opensign").default("opensign"),
       productName: withFallback(
         z.string().trim().min(1).max(80),
-        "OpenSign™"
-      ).default("OpenSign™"),
+        "PatriotSign"
+      ).default("PatriotSign"),
       metaDescription: withFallback(z.string().trim().max(240), "").default(""),
       environment: withFallback(slug, "production").default("production"),
       region: withFallback(slug, "global").default("global"),

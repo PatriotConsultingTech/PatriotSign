@@ -1529,7 +1529,7 @@ export const addInitialData = (signerPos, setXyPosition, value, userId) => {
 
 //function for embed document id
 export const embedDocId = async (pdfOriginalWH, pdfDoc, documentId) => {
-  const appName = "OpenSign™";
+  const appName = "PatriotSign";
   // `fontBytes` is used to embed custom font in pdf
   const pdfFontUrl = getRuntimePdfFontUrl();
   if (!pdfFontUrl) throw new Error("A PDF font URL is required.");
@@ -2870,11 +2870,11 @@ export const getAppLogo = async () => {
     if (tenant) {
       const resolvedFavicon =
         tenant?.favicon || tenant?.logo || appInfo.fev_Icon;
-      localStorage.setItem("appname", "OpenSign™");
+      localStorage.setItem("appname", "PatriotSign");
       localStorage.setItem("favicon", appInfo.fev_Icon);
       persistBrandPresentation(
         {
-          appName: tenant?.appname || "OpenSign™",
+          appName: tenant?.appname || "PatriotSign",
           logo: tenant?.logo || appInfo.applogo,
           favicon: resolvedFavicon
         },
@@ -3145,7 +3145,7 @@ export const handleToPrint = async (event, setIsDownloading, pdfDetails) => {
 };
 const downloadCertificate = async (certificate, isZip, asBlob) => {
   try {
-    const appName = "OpenSign™";
+    const appName = "PatriotSign";
     const certificateUrl = certificate;
     if (isZip) {
       return certificateUrl;

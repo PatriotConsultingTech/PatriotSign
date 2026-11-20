@@ -72,7 +72,7 @@ export default function Title() {
     };
   }, []);
   const appName =
-    "OpenSign™";
+    "PatriotSign";
   const logo = localStorage.getItem("favicon");
   const { metaDescription, themeColor, backgroundColor } = getBrowserMetadata();
   const prefix = useMemo(

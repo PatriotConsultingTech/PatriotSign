@@ -4,8 +4,8 @@ export const BRAND_PRESENTATION_EVENT = "opensign:brand-presentation-change";
 
 const BRAND_SOURCE_KEY = "brandSource";
 const RESOLVED_BRAND_SOURCES = new Set(["deployment", "tenant"]);
-const OPEN_SIGN_SIDEBAR_BRAND_NAME = "OpenSign";
-const OPEN_SIGN_PRODUCT_NAME = "OpenSign™";
+const OPEN_SIGN_SIDEBAR_BRAND_NAME = "PatriotSign";
+const OPEN_SIGN_PRODUCT_NAME = "PatriotSign";
 
 const THEME_VARIABLES = {
   primary: "--p",
@@ -149,7 +149,7 @@ export function initializeAppInfoBrand(appInfo) {
 
   persistBrandPresentation(
     {
-      appName: localStorage.getItem("appname") || "OpenSign™",
+      appName: localStorage.getItem("appname") || "PatriotSign",
       logo: appInfo.applogo,
       favicon: appInfo.fev_Icon
     },
