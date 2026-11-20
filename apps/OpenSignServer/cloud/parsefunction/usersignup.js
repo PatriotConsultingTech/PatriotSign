@@ -5,7 +5,7 @@ const APPID = serverAppId;
 const masterKEY = process.env.MASTER_KEY;
 
 async function saveUser(userDetails) {
-  const normalizedEmail = normalizeEmail(userDetails.email.toLowerCase().replace(/\s/g, ''));
+  const normalizedEmail = userDetails.email.toLowerCase().replace(/\s/g, '');
   const userQuery = new Parse.Query(Parse.User);
   userQuery.equalTo('username', userDetails.email);
   const userRes = await userQuery.first({ useMasterKey: true });

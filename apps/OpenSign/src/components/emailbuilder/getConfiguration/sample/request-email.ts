@@ -290,7 +290,7 @@ const getRequestEmail = (
           }
         },
         props: {
-          buttonBackgroundColor: "#D46B0f",
+          buttonBackgroundColor: "#00477B",
           buttonStyle: "rectangle",
           fullWidth: false,
           size: "medium",

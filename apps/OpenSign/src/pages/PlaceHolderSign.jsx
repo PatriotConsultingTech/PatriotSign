@@ -80,7 +80,6 @@ function PlaceHolderSign() {
   const windowSize = useWindowSize();
   const prefillImg = useSelector((state) => state.widget.prefillImg);
   const isShowModal = useSelector((state) => state.widget.isShowModal);
-  const editorRef = useRef();
   const navigate = useNavigate();
   const [isMailModal, setIsMailModal] = useState(false);
   const [customizeMail, setCustomizeMail] = useState({
@@ -1709,13 +1708,6 @@ function PlaceHolderSign() {
     setIsAddSigner(false);
   };
 
-  //function for handle ontext change and save again text in delta in Request Email flow
-  const handleOnchangeRequest = () => {
-    if (editorRef.current) {
-      const html = editorRef.current.editor.root.innerHTML;
-      setRequestBody(html);
-    }
-  };
   const signerAssignTour = [
     {
       selector: '[data-tut="assignSigner"]',
@@ -1823,9 +1815,6 @@ function PlaceHolderSign() {
 
   const handleEditDocumentForm = async (data) => {
     setIsEditDoc(false);
-    if (Array.isArray(data?.QualifiedSignatureConfig)) {
-      setQesDocConfig(data.QualifiedSignatureConfig);
-    }
     const updateDocument = pdfDetails.map((x) => {
       return { ...x, ...data };
     });

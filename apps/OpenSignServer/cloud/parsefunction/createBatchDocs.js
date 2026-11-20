@@ -1,91 +1,14 @@
 import axios from 'axios';
-import { cloudServerUrl, mailTemplate, replaceMailVaribles, serverAppId } from '../../Utils.js';
+import { cloudServerUrl, generateId, mailTemplate, replaceMailVaribles, serverAppId } from '../../Utils.js';
 import { setDocumentCount } from '../../utils/CountUtils.js';
 
-import crypto from 'crypto';
-import sendSystemMail from './sendSystemMail.js';
-
-function chunkArray(arr, size) {
-  const out = [];
-  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
-  return out;
-}
-
-async function mapWithConcurrency(items, concurrency, fn) {
-  const results = new Array(items.length);
-  let idx = 0;
-
-  async function worker() {
-    while (true) {
-      const current = idx++;
-      if (current >= items.length) return;
-      results[current] = await fn(items[current], current);
-    }
-  }
-
-  const workers = [];
-  for (let i = 0; i < Math.min(concurrency, items.length); i++) {
-    workers.push(worker());
-  }
-  await Promise.all(workers);
-  return results;
-}
 
 function toBase64(str) {
   return Buffer.from(str, 'utf8').toString('base64');
 }
 
-function uuid() {
-  return crypto.randomUUID ? crypto.randomUUID() : crypto.randomBytes(16).toString('hex');
-}
-
 const serverUrl = cloudServerUrl; //process.env.SERVER_URL;
 const appId = serverAppId;
-
-async function sendOwnerSummaryEmail({
-  ownerEmail,
-  ownerName,
-  total,
-  created,
-  failed,
-  failedList,
-}) {
-  try {
-    const subject = `Bulk send finished: ${failed} of ${total} failed to create`;
-
-    const failureHtml = failedList?.length
-      ? `<ul>${failedList
-        .slice(0, 50)
-        .map(f => `<li>#${f.index + 1}: ${String(f.error).slice(0, 200)}</li>`)
-        .join('')}</ul>
-         ${failedList.length > 50 ? `<p>…and ${failedList.length - 50} more.</p>` : ''}`
-      : `<p>No failures.</p>`;
-
-    const html = `
-      <p>Hi ${ownerName || ''},</p>
-      <p>Your bulk send processing is complete.</p>
-      <p><b>Total requested:</b> ${total}<br/>
-         <b>Created:</b> ${created}<br/>
-         <b>Failed to create:</b> ${failed}</p>
-      <h4>Failure details</h4>
-      ${failureHtml}
-    `;
-
-    const params = {
-      // keep provider selection consistent with your system; if you can’t decide, omit it.
-      isbulksend: true,
-      recipient: ownerEmail,
-      subject,
-      from: ownerEmail, // or use a tenant/from address if required by your provider
-      replyto: ownerEmail,
-      html,
-    };
-
-    await sendSystemMail({ params });
-  } catch (e) {
-    console.log('batchdoc Failed to send owner summary email:', e?.message || e);
-  }
-}
 
 async function deductcount(docsCount, extUserId) {
   try {
@@ -196,8 +119,6 @@ async function sendMail(document, publicUrl) {
 }
 
 async function startBulkSendInBackground(userId, Documents, Ip, parseConfig, type, publicUrl) {
-  const BATCH_LIMIT = 50; // Parse batch limit (safe)
-  const DOC_MAIL_CONCURRENCY = 5;
 
   // Find ext user
   const extCls = new Parse.Query('contracts_Users');
@@ -205,7 +126,6 @@ async function startBulkSendInBackground(userId, Documents, Ip, parseConfig, typ
   const resExt = await extCls.first({ useMasterKey: true });
   if (!resExt) throw new Parse.Error(Parse.Error.OBJECT_NOT_FOUND, 'User not found.');
 
-  const _resExt = JSON.parse(JSON.stringify(resExt));
   // Build Parse /batch requests from your existing mapping (same as your current code)
   const requests = Documents.map(x => {
     const Signers = x.Signers;
@@ -266,7 +186,6 @@ async function startBulkSendInBackground(userId, Documents, Ip, parseConfig, typ
           objectId: y.objectId,
         })),
         ACL: Acl,
-        SentToOthers: true,
         RemindOnceInEvery: x.RemindOnceInEvery ? parseInt(x.RemindOnceInEvery) : 5,
         AutomaticReminders: x.AutomaticReminders || false,
         TimeToCompleteDays: x.TimeToCompleteDays ? parseInt(x.TimeToCompleteDays) : 15,

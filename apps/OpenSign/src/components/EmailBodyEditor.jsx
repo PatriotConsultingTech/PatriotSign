@@ -85,6 +85,7 @@ const EmailBodyEditor = ({
           <a
             href={`/emailbuilder${template}`}
             target="_blank"
+            rel="noreferrer"
             referrerPolicy="no-referrer"
             className="op-link op-link-primary font-medium"
           >

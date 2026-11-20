@@ -48,7 +48,7 @@ export const templateReportTour = [
         to read more about all available options.
         <p className="pt-2">
           Note: Changes to an existing template will apply to all future
-          documents created from that template but won't affect documents that
+          documents created from that template but won&apos;t affect documents that
           are already sent out.
         </p>
       </Trans>

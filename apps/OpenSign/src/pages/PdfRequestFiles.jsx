@@ -730,23 +730,6 @@ function PdfRequestFiles(
               } else {
                 pdfArrBuffer = arrayBuffer;
               }
-              const prefillDetails = signerPos.find(
-                (x) => x.Role === "prefill"
-              );
-              //condition to embed prefill widgets details in pdf in public signing flow
-              if (prefillDetails && props.templateId) {
-                const prefillwidgets = prefillDetails?.placeHolder;
-                const pdfDoc = await PDFDocument.load(pdfArrBuffer);
-                const pdfbase64 = await embedWidgetsToDoc(
-                  prefillwidgets,
-                  pdfDoc,
-                  isSignYourSelfFlow,
-                  scale,
-                  prefillImg
-                );
-                //convert base64 to arraybuffer is used in pdf-lib
-                pdfArrBuffer = base64ToArrayBuffer(pdfbase64);
-              }
             } else if (
               documentData === "Error: Something went wrong!" ||
               (documentData.result && documentData.result.error)
@@ -1825,14 +1808,6 @@ function PdfRequestFiles(
     setIsReqSignTourDisabled(false);
   };
 
-  const getSignerEmail = () => {
-    const isSignerAssigned = unsignedSigners[0]?.objectId;
-    let email = formData[0]?.email;
-    if (isSignerAssigned) {
-      email = unsignedSigners[0]?.Email;
-    }
-    return email;
-  };
   const handleDownload = async () => {
       setIsCompleted((prev) => ({ ...prev, isModal: false }));
       setIsDownloadModal(true);
