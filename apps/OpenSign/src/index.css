@@ -209,12 +209,7 @@ textarea:focus-visible {
       rgba(47, 111, 222, 0.48) 0 9rem,
       transparent 9.1rem
     ),
-    radial-gradient(
-      circle at 0% 100%,
-      rgba(47, 111, 222, 0.42) 0 13rem,
-      transparent 13.1rem
-    ),
-    linear-gradient(145deg, #102954 0%, #0c2047 52%, #102b5d 100%);
+    #00477b;
   color: #f7f9fc;
 }
 
@@ -321,7 +316,7 @@ textarea:focus-visible {
   top: 12%;
   left: 34%;
   border-radius: 1rem;
-  background: linear-gradient(150deg, #1c5bad, #163f84);
+  background: #00477b;
   box-shadow: 0 1.2rem 3rem rgba(0, 8, 28, 0.28);
   transform: rotate(5deg);
 }
@@ -374,12 +369,7 @@ textarea:focus-visible {
   top: 32%;
   border: 2px solid #82bbff;
   border-radius: 99px;
-  background: linear-gradient(
-    90deg,
-    #1b6dcc 0 35%,
-    #50a1fa 36% 75%,
-    #1761b7 76%
-  );
+  background: #00477b;
   box-shadow: 0 0.8rem 1.2rem rgba(0, 8, 28, 0.28);
   transform: rotate(-24deg);
 }
@@ -570,7 +560,7 @@ textarea:focus-visible {
 }
 
 .os-login-actions .op-btn-primary {
-  background: linear-gradient(100deg, #174ea6 0%, #2369cb 100%);
+  background: #00477b;
   color: #fff;
 }
 
