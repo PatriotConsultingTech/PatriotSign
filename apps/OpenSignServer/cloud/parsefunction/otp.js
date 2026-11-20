@@ -66,30 +66,32 @@ export async function verifyOtp(email, otp) {
   if (!expiresAt || expiresAt.getTime() < Date.now() || isLocked(record)) {
     return false;
   }
-  // Count the attempt before comparing, so parallel guesses cannot skip the limit.
-  record.increment('Attempts');
-  await record.save(null, { useMasterKey: true });
-  if (record.get('Attempts') > OTP_MAX_ATTEMPTS) {
-    return false;
-  }
-  const expected = Buffer.from(String(record.get('OTP')));
-  const given = Buffer.from(String(code));
-  const matches = expected.length === given.length && crypto.timingSafeEqual(expected, given);
-  if (!matches) {
-    record.increment('Failures');
-    await record.save(null, { useMasterKey: true });
-    if (record.get('Failures') >= OTP_MAX_FAILURES) {
-      record.set('Failures', 0);
-      record.set('LockedUntil', new Date(Date.now() + OTP_LOCK_MS));
-      await record.save(null, { useMasterKey: true });
-    }
-    return false;
-  }
   try {
-    // Deleting fails if a parallel request already used this code, so only one succeeds.
+    // Count the attempt before comparing, so parallel guesses cannot skip the limit.
+    record.increment('Attempts');
+    await record.save(null, { useMasterKey: true });
+    if (record.get('Attempts') > OTP_MAX_ATTEMPTS) {
+      return false;
+    }
+    const expected = Buffer.from(String(record.get('OTP')));
+    const given = Buffer.from(String(code));
+    const matches = expected.length === given.length && crypto.timingSafeEqual(expected, given);
+    if (!matches) {
+      record.increment('Failures');
+      await record.save(null, { useMasterKey: true });
+      if (record.get('Failures') >= OTP_MAX_FAILURES) {
+        record.set('Failures', 0);
+        record.set('LockedUntil', new Date(Date.now() + OTP_LOCK_MS));
+        await record.save(null, { useMasterKey: true });
+      }
+      return false;
+    }
     await record.destroy({ useMasterKey: true });
-  } catch {
+    return true;
+  } catch (err) {
+    // Parse rejects saving or deleting a record that a parallel request already used,
+    // so only one request can succeed. Any other database error also counts as not verified.
+    console.log('otp check not completed:', err?.message);
     return false;
   }
-  return true;
 }

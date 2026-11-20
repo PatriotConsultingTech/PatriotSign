@@ -18,13 +18,15 @@ class FakeObject {
   increment(key) {
     this.data[key] = (this.data[key] || 0) + 1;
   }
+  // Parse rejects saving or deleting an object that is already gone.
   async save() {
+    if (this.destroyed) throw new Error('Object not found.');
     if (!rows.includes(this)) rows.push(this);
     return this;
   }
   async destroy() {
-    // Parse rejects deleting an object that is already gone.
-    if (!rows.includes(this)) throw new Error('Object not found.');
+    if (this.destroyed) throw new Error('Object not found.');
+    this.destroyed = true;
     rows.splice(rows.indexOf(this), 1);
   }
 }
@@ -133,6 +135,35 @@ test('lets only one of two parallel requests use the code', async () => {
   const code = await issueOtp(email);
   const results = await Promise.all([verifyOtp(email, code), verifyOtp(email, code)]);
   assert.deepEqual(results.sort(), [false, true]);
+});
+
+test('returns false, not an error, when the record vanishes mid-check', async () => {
+  const code = await issueOtp(email);
+  const original = FakeQuery.prototype.first;
+  // Each lookup returns its own copy, as real Parse does, so a parallel delete is not visible.
+  FakeQuery.prototype.first = async function () {
+    const row = await original.call(this);
+    if (!row) return row;
+    const copy = new FakeObject(row.className);
+    copy.data = { ...row.data };
+    copy.save = async () => {
+      if (!rows.includes(row)) throw new Error('Object not found.');
+      Object.assign(row.data, copy.data);
+      return copy;
+    };
+    copy.destroy = () => row.destroy();
+    return copy;
+  };
+  try {
+    const results = await Promise.all([
+      verifyOtp(email, code),
+      verifyOtp(email, code),
+      verifyOtp(email, code),
+    ]);
+    assert.equal(results.filter(Boolean).length, 1);
+  } finally {
+    FakeQuery.prototype.first = original;
+  }
 });
 
 test('pauses the email after too many wrong guesses across codes', async () => {
