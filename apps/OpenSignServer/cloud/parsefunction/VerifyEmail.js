@@ -1,18 +1,15 @@
+import { verifyOtp } from './otp.js';
+
 export default async function VerifyEmail(request) {
   try {
     if (!request?.user) {
       throw new Parse.Error(Parse.Error.INVALID_SESSION_TOKEN, 'User is not authenticated.');
     } else {
       let otpN = request.params.otp;
-      let otp = parseInt(otpN);
       let email = request.params.email;
 
-      //checking otp is correct or not which already save in defaultdata_Otp class
-      const checkOtp = new Parse.Query('defaultdata_Otp');
-      checkOtp.equalTo('Email', email);
-      checkOtp.equalTo('OTP', otp);
-
-      const res = await checkOtp.first({ useMasterKey: true });
+      // the code must be current, unexpired and within the attempt limit; it works once
+      const res = await verifyOtp(email, otpN);
       if (res) {
         // Fetch the user by their objectId
         const isEmailVerified = request?.user?.get('emailVerified');
