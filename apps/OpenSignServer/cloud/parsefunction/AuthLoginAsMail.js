@@ -15,7 +15,7 @@ async function AuthLoginAsMail(request) {
     // the code must be current, unexpired and within the attempt limit; it works once
     const isValidOtp = await verifyOtp(email, otpN);
     if (isValidOtp) {
-      const result = await getToken(request);
+      const result = await getToken();
       if (result && !result?.emailVerified) {
         const userQuery = new Parse.Query(Parse.User);
         const user = await userQuery.get(result?.objectId, {
@@ -28,13 +28,13 @@ async function AuthLoginAsMail(request) {
         if (res) {
           return result;
         } else {
-          reject('user not found!');
+          throw new Error('user not found!');
         }
       } else {
         return result;
       }
 
-      async function getToken(request) {
+      async function getToken() {
         return new Promise(function (resolve, reject) {
           const query = new Parse.Query(Parse.User);
           query.equalTo('email', email);
@@ -64,7 +64,7 @@ async function AuthLoginAsMail(request) {
                     reject('user not found!');
                   }
                 })
-                .catch(err => {
+                .catch(() => {
                   reject('user not found!');
                 });
 
