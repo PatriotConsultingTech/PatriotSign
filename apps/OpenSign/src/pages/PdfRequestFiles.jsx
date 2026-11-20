@@ -26,6 +26,7 @@ import {
   addDefaultSignatureImg,
   replaceMailVaribles,
   convertPdfArrayBuffer,
+  base64ToArrayBuffer,
   contractUsers,
   contactBook,
   handleToPrint,
