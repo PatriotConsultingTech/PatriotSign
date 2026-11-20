@@ -56,7 +56,7 @@ export const color = [
 
 export const prefillBlockColor = 'transparent';
 export const normalizeMailSubject = subject =>
-  String(subject || '').replace(/opensign™/gi, 'opensign');
+  String(subject || '').replace(/opensign™/gi, 'PatriotSign');
 
 export function replaceMailVaribles(subject, body, variables) {
   let replacedSubject = subject;

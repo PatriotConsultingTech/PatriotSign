@@ -237,7 +237,7 @@ app.use('/', customRoute);
 
 // Parse Server plays nicely with the rest of your web routes
 app.get('/', function (req, res) {
-  res.status(200).send('opensign-server is running !!!');
+  res.status(200).send('patriotsign-server is running !!!');
 });
 
 if (!process.env.TESTING) {
@@ -254,7 +254,7 @@ if (!process.env.TESTING) {
     console.error('Database migration failed:', error);
   }
   httpServer.listen(port, '0.0.0.0', function () {
-    console.log('opensign-server running on port ' + port + '.');
+    console.log('patriotsign-server running on port ' + port + '.');
     const isWindows = process.platform === 'win32';
     // console.log('isWindows', isWindows);
     const migrate = isWindows
