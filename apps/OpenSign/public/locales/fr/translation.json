@@ -780,7 +780,7 @@
   "quantity-of-credits": "Quantité de crédits de prime",
   "remaining-credits": "Crédits premium disponibles :",
   "additional-credits": "Veuillez acheter des crédits premium",
-  "remaining-credits-help": "Utilisez des crédits premium pour la signature de documents via l'API, l'envoi groupé ou l'intégration d'PatriotSign sur votre site Web. Il vous reste {{allowedcredits}} crédits inclus et {{addoncredits}} crédits supplémentaires achetés. Si vous êtes sur un plan Teams ou Enterprise, ces crédits peuvent être partagés entre tous les utilisateurs de votre entreprise, sauf si l'administrateur du compte a défini une limite pour votre compte.",
+  "remaining-credits-help": "Utilisez des crédits premium pour la signature de documents via l'API, l'envoi groupé ou l'intégration de PatriotSign sur votre site Web. Il vous reste {{allowedcredits}} crédits inclus et {{addoncredits}} crédits supplémentaires achetés. Si vous êtes sur un plan Teams ou Enterprise, ces crédits peuvent être partagés entre tous les utilisateurs de votre entreprise, sauf si l'administrateur du compte a défini une limite pour votre compte.",
   "quota-err-quicksend": "Quota atteint, vous n'avez pas assez de crédits.",
   "bulk-send-free-quota": "Vous avez atteint votre quota gratuit de création de documents.",
   "bulk-send-quota-error": "Quota atteint. Veuillez acheter des crédits et réessayer.",
