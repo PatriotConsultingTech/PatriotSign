@@ -87,7 +87,7 @@ function SignYourSelf() {
   const { scrollRef } = useScroll();
   const isShowModal = useSelector((state) => state.widget.isShowModal);
   const appName =
-    "OpenSign™";
+    "PatriotSign";
   const divRef = useRef(null);
   const nodeRef = useRef(null);
   const pdfRef = useRef();

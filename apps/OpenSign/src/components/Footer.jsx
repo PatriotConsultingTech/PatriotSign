@@ -4,8 +4,7 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { getRuntimeConfig } from "../constant/runtimeConfig";
 const Footer = () => {
-  const { brandKey, productName: appName } = getRuntimeConfig();
-  const isOpenSign = brandKey === "opensign";
+  const { productName: appName } = getRuntimeConfig();
   const { t } = useTranslation();
   const [showButton, setShowButton] = useState(false);
   const [version, setVersion] = useState("");
@@ -59,10 +58,6 @@ const Footer = () => {
 
   const normalizedVersion = typeof version === "string" ? version.trim() : "";
   const displayVersion = normalizedVersion || Package.version;
-  const releaseTag = displayVersion.startsWith("v")
-    ? displayVersion
-    : `v${displayVersion}`;
-  const releaseUrl = `https://github.com/OpenSignLabs/OpenSign/releases/tag/${releaseTag}`;
   const versionLabel = (
     <>
       {appName} ( {t("version")}: {displayVersion})
@@ -74,18 +69,7 @@ const Footer = () => {
         <aside>
           <p>
             {t("all-right")} &copy; {new Date().getFullYear()} &nbsp;
-            {isOpenSign ? (
-              <a
-                href={releaseUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline cursor-pointer"
-              >
-                {versionLabel}
-              </a>
-            ) : (
-              <span>{versionLabel}</span>
-            )}
+            <span>{versionLabel}</span>
           </p>
         </aside>
       </footer>

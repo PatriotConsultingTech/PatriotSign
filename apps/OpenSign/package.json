@@ -6,6 +6,8 @@
     "@eid-easy/eideasy-widget": "^3.17.3",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
+    "@fontsource/montserrat": "^5.3.0",
+    "@fontsource/open-sans": "^5.3.0",
     "@formkit/auto-animate": "^0.9.0",
     "@imgly/background-removal": "^1.7.0",
     "@lottiefiles/dotlottie-react": "^0.19.0",
