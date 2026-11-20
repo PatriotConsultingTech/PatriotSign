@@ -22,7 +22,7 @@ import SelectLanguage from "../components/pdf/SelectLanguage";
 
 function Login() {
   const appName =
-    "OpenSign™";
+    "PatriotSign";
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
@@ -426,7 +426,6 @@ function Login() {
               <div className="os-rail-copy">
                 <h2>
                   <span>{t("sign-documents")}</span>
-                  <span>{t("securely-simply")}</span>
                 </h2>
                 <p>{t("login-hero-description")}</p>
               </div>
@@ -457,8 +456,8 @@ function Login() {
                   <svg viewBox="0 0 64 72" fill="none">
                     <path
                       d="M32 4 57 13v20c0 16-10 27-25 35C17 60 7 49 7 33V13L32 4Z"
-                      fill="#2F6FDE"
-                      stroke="#A9D0FF"
+                      fill="#00477B"
+                      stroke="#ECF3F8"
                       strokeWidth="4"
                     />
                     <rect
@@ -475,7 +474,7 @@ function Login() {
                       strokeWidth="4"
                       strokeLinecap="round"
                     />
-                    <circle cx="32" cy="38" r="2" fill="#2F6FDE" />
+                    <circle cx="32" cy="38" r="2" fill="#00477B" />
                   </svg>
                 </div>
                 <div className="os-signing-check">

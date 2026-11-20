@@ -52,7 +52,7 @@ async function addTeamAndOrg(extUser) {
           objectId: teamRes.id,
         },
       ]);
-      const extUserRes = await updateUser.save(null, { useMasterKey: true });
+      await updateUser.save(null, { useMasterKey: true });
     }
   } catch (err) {
     console.log('err in add team, role, org', err);

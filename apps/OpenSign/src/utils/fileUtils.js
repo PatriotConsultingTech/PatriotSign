@@ -76,6 +76,7 @@ function formatFixedDate(date = new Date()) {
  */
 function sanitizeDownloadFilename(name) {
   return name
+    // eslint-disable-next-line no-control-regex -- intentional: strip control characters
     .replace(/[\\/:*?"<>|\u0000-\u001F]/g, " ") // reserved + control
     .replace(/\s+/g, " ") // collapse spaces
     .trim();

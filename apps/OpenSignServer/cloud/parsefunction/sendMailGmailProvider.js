@@ -44,6 +44,7 @@ export const encodeMimeAddress = address => {
   const match = value.match(/^(.*?)\s*<([^<>]+)>$/);
   const displayName = match ? match[1].trim() : value;
 
+  // eslint-disable-next-line no-control-regex -- intentional ASCII check
   if (/^[\x00-\x7F]*$/.test(displayName)) return value;
 
   const encodedName = Buffer.from(displayName, 'utf8').toString('base64');
@@ -74,9 +75,9 @@ const makeEmail = async (
   let str;
   if (url) {
     let attachments;
-    let Pdf = fs.createWriteStream(testPdf);
+    const Pdf = fs.createWriteStream(testPdf);
     const writeToLocalDisk = () => {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         const isSecure =
           new URL(url)?.protocol === 'https:' && new URL(url)?.hostname !== 'localhost';
         if (isSecure) {
@@ -238,14 +239,14 @@ export default async function sendMailGmailProvider(_extRes, template) {
       if (fs.existsSync(certificatepath)) {
         try {
           fs.unlinkSync(certificatepath);
-        } catch (err) {
+        } catch {
           console.log('Err in unlink certificate sendmailgmail provider');
         }
       }
       if (fs.existsSync(testPdf)) {
         try {
           fs.unlinkSync(testPdf);
-        } catch (err) {
+        } catch {
           console.log('sendMailGmailProvider unlink pdf error');
         }
       }

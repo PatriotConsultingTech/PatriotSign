@@ -30,6 +30,7 @@ export default async function recreateDocument(request) {
       throw new Parse.Error(Parse.Error.INVALID_SESSION_TOKEN, 'Signyourself Document not allowed');
     }
     const _docRes = doc?.toJSON();
+    // eslint-disable-next-line no-unused-vars -- intentional: omit ACL and objectId
     const { ACL, objectId, ...docRes } = _docRes;
     const createDoc = new Parse.Object('contracts_Document');
     Object.entries(docRes).forEach(([key, value]) => {
@@ -41,6 +42,7 @@ export default async function recreateDocument(request) {
           placeHolder: (signer.placeHolder || []).map(page => ({
             ...page,
             pos: (page.pos || []).map(widget => {
+              // eslint-disable-next-line no-unused-vars -- intentional: omit key from rest
               const { SignUrl, ...rest } = widget;
               return {
                 ...rest,

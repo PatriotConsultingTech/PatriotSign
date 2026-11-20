@@ -55,9 +55,9 @@ async function sendOwnerSummaryEmail({
 
     const failureHtml = failedList?.length
       ? `<ul>${failedList
-          .slice(0, 50)
-          .map(f => `<li>#${f.index + 1}: ${String(f.error).slice(0, 200)}</li>`)
-          .join('')}</ul>
+        .slice(0, 50)
+        .map(f => `<li>#${f.index + 1}: ${String(f.error).slice(0, 200)}</li>`)
+        .join('')}</ul>
          ${failedList.length > 50 ? `<p>…and ${failedList.length - 50} more.</p>` : ''}`
       : `<p>No failures.</p>`;
 
@@ -129,7 +129,7 @@ async function sendMail(document, publicUrl) {
 
   for (let i = 0; i < signerMail.length; i++) {
     try {
-      let url = `${serverUrl}/functions/sendmailv3`;
+      const url = `${serverUrl}/functions/sendmailv3`;
       const headers = {
         'Content-Type': 'application/json',
         'X-Parse-Application-Id': appId,
@@ -144,11 +144,11 @@ async function sendMail(document, publicUrl) {
       } else {
         encodeBase64 = toBase64(`${document.objectId}/${signerMail[i].email}`);
       }
-      let signPdf = `${hostUrl}/login/${encodeBase64}`;
+      const signPdf = `${hostUrl}/login/${encodeBase64}`;
       const orgName = document.ExtUserPtr.Company ? document.ExtUserPtr.Company : '';
       const senderObj = document?.ExtUserPtr;
-      let mailBody = senderObj?.TenantId?.RequestBody || '';
-      let mailSubject = senderObj?.TenantId?.RequestSubject || '';
+      const mailBody = senderObj?.TenantId?.RequestBody || '';
+      const mailSubject = senderObj?.TenantId?.RequestSubject || '';
       let replaceVar;
       if (mailBody && mailSubject) {
         const replacedRequestBody = mailBody.replace(/"/g, "'");
@@ -180,7 +180,7 @@ async function sendMail(document, publicUrl) {
         localExpireDate: localExpireDate,
         signingUrl: signPdf,
       };
-      let params = {
+      const params = {
         extUserId: document.ExtUserPtr.objectId,
         recipient: existSigner?.Email || signerMail[i].email,
         subject: replaceVar?.subject ? replaceVar?.subject : mailTemplate(mailparam).subject,
@@ -225,9 +225,9 @@ async function startBulkSendInBackground(userId, Documents, Ip, parseConfig, typ
         }
       });
     }
-    let mailBody = x?.ExtUserPtr?.TenantId?.RequestBody || '';
-    let mailSubject = x?.ExtUserPtr?.TenantId?.RequestSubject || '';
-    let EmailEditorType = x?.ExtUserPtr?.TenantId?.EmailEditorType || '';
+    const mailBody = x?.ExtUserPtr?.TenantId?.RequestBody || '';
+    const mailSubject = x?.ExtUserPtr?.TenantId?.RequestSubject || '';
+    const EmailEditorType = x?.ExtUserPtr?.TenantId?.EmailEditorType || '';
     return {
       method: 'POST',
       path: '/app/classes/contracts_Document',
@@ -247,15 +247,15 @@ async function startBulkSendInBackground(userId, Documents, Ip, parseConfig, typ
         Placeholders: placeholders.map(y =>
           y?.signerPtr?.objectId
             ? {
-                ...y,
-                signerPtr: {
-                  __type: 'Pointer',
-                  className: 'contracts_Contactbook',
-                  objectId: y.signerPtr.objectId,
-                },
-                signerObjId: y.signerObjId,
-                email: y?.signerPtr?.Email || y?.email || '',
-              }
+              ...y,
+              signerPtr: {
+                __type: 'Pointer',
+                className: 'contracts_Contactbook',
+                objectId: y.signerPtr.objectId,
+              },
+              signerObjId: y.signerObjId,
+              email: y?.signerPtr?.Email || y?.email || '',
+            }
             : { ...y, signerPtr: {}, signerObjId: '', email: y.email || '' }
         ),
         SignedUrl: x.URL || x.SignedUrl,
@@ -288,12 +288,12 @@ async function startBulkSendInBackground(userId, Documents, Ip, parseConfig, typ
         ...(EmailEditorType ? { EmailEditorType: EmailEditorType } : {}),
         ...(x?.objectId
           ? {
-              TemplateId: {
-                __type: 'Pointer',
-                className: 'contracts_Template',
-                objectId: x?.objectId,
-              },
-            }
+            TemplateId: {
+              __type: 'Pointer',
+              className: 'contracts_Template',
+              objectId: x?.objectId,
+            },
+          }
           : {}),
         ...(x?.PenColors?.length > 0 ? { PenColors: x?.PenColors } : {}),
       },
@@ -327,7 +327,7 @@ export default async function createBatchDocs(request) {
 
   const Ip = request?.headers?.['x-real-ip'] || '';
   // Use the browser origin so signing links keep the custom domain.
-  let publicUrl = request.headers.origin || request.headers.public_url;
+  const publicUrl = request.headers.origin || request.headers.public_url;
   const parseConfig = {
     baseURL: serverUrl,
     headers: {

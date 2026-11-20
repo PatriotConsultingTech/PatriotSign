@@ -93,6 +93,7 @@ export default async function saveAsTemplate(request) {
               pos: (page.pos || []).map(widget => {
                 // if there is a defaultValue in options, zero it out
                 if (widget.options && widget.options.defaultValue !== undefined) {
+                  // eslint-disable-next-line no-unused-vars -- intentional: omit key from rest
                   const { SignUrl, ...rest } = widget;
                   return {
                     ...rest,
@@ -107,6 +108,7 @@ export default async function saveAsTemplate(request) {
                   }; // reset only the value
                 }
                 // otherwise, return the widget unchanged
+                // eslint-disable-next-line no-unused-vars -- intentional: omit key from rest
                 const { SignUrl, ...rest } = widget;
                 return {
                   ...rest,

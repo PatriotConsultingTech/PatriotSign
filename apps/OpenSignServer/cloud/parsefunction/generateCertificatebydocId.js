@@ -17,10 +17,9 @@ const eSigncontact = deploymentBrand.digitalSignature.contact;
 async function uploadFile(pdfName, filepath) {
   try {
     const filedata = fs.readFileSync(filepath);
-    let fileUrl;
 
     const fileRes = await parseUploadFile(pdfName, filedata, 'application/pdf');
-    fileUrl = getSecureUrl(fileRes?.url)?.url;
+    const fileUrl = getSecureUrl(fileRes?.url)?.url;
     return { imageUrl: fileUrl };
   } catch (err) {
     console.log('Err ', err);
@@ -62,7 +61,7 @@ export default async function generateCertificatebydocId(req) {
       const _docRes = JSON.parse(JSON.stringify(docRes));
       const filteredaudit = _docRes?.AuditTrail?.filter(x => x?.UserPtr?.objectId);
       // Create a reversed copy of the array and find the last object with 'signedOn'
-      const lastObj = [...filteredaudit].reverse().find(obj => obj.hasOwnProperty('SignedOn'));
+      const lastObj = [...filteredaudit].reverse().find(obj => Object.prototype.hasOwnProperty.call(obj, 'SignedOn'));
       const completedAt = lastObj.SignedOn;
       const doc = { ..._docRes, completedAt: completedAt };
       const certificate = await GenerateCertificate(doc);
@@ -90,7 +89,7 @@ export default async function generateCertificatebydocId(req) {
       const updateDoc = new Parse.Object('contracts_Document');
       updateDoc.id = doc.objectId;
       updateDoc.set('CertificateUrl', file.imageUrl);
-      const updateDocRes = await updateDoc.save(null, { useMasterKey: true });
+      await updateDoc.save(null, { useMasterKey: true });
       unlinkCertificate(certificatePath);
       return { CertificateUrl: file.imageUrl };
     } else {

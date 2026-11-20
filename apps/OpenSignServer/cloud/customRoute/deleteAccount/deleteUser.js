@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { cloudServerUrl, generateId, serverAppId } from '../../../Utils.js';
-import { resolveBrandContext } from '../../../utils/brandContext.js';
 import { deleteContactsInBatch, deleteDataFiles, deleteInBatches } from './deleteFileUrl.js';
 import { MAX_ATTEMPTS } from './deleteUtils.js';
 const serverUrl = cloudServerUrl;
@@ -35,14 +34,6 @@ const resetPasswordAndDeleteSession = async userId => {
 };
 export async function deleteUser(userId, adminId, adminTenantId, isOrgAdmin, orgPtr) {
   const userPointer = { __type: 'Pointer', className: '_User', objectId: userId };
-  let userDetails = {
-    UserRole: 'not found',
-    Name: 'not found',
-    Email: 'not found',
-    UserId: userId || 'not found',
-    objectId: 'not found',
-    TenantId: 'not found',
-  };
   try {
     // STEP 1: contracts_Users lookup
     const Users = Parse.Object.extend('contracts_Users');
@@ -57,12 +48,10 @@ export async function deleteUser(userId, adminId, adminTenantId, isOrgAdmin, org
       userQuery.equalTo('CreatedBy', { __type: 'Pointer', className: '_User', objectId: adminId });
     }
     const userResult = await userQuery.first({ useMasterKey: true });
-    userDetails = { ...userDetails, UserId: userId };
     if (!userResult) {
       const errorMessage = isOrgAdmin ? 'Unauthorized.' : 'User not found.';
       return { code: 400, message: errorMessage };
     }
-    const contractsUserId = userResult.id;
     const tenantId = userResult.get('TenantId')?.id;
     const teamIds = userResult.get('TeamIds') || [];
     const organizationId = userResult.get('OrganizationId')?.id;
@@ -71,15 +60,6 @@ export async function deleteUser(userId, adminId, adminTenantId, isOrgAdmin, org
       const errorMessage = 'Unauthorized.';
       return { code: 400, message: errorMessage };
     }
-    userDetails = {
-      ...userDetails,
-      UserRole: userResult?.get('UserRole'),
-      Name: userResult?.get('Name'),
-      Email: userResult?.get('Email'),
-      UserId: userResult?.get('UserId')?.id,
-      objectId: userResult?.id,
-      TenantId: userResult?.get('TenantId')?.id,
-    };
     if (adminId && isAdmin) {
       const errorMessage = 'An error occurred while deleting your account.';
       return { code: 400, message: errorMessage };
@@ -249,14 +229,6 @@ export async function deleteUser(userId, adminId, adminTenantId, isOrgAdmin, org
 export const deleteUserPost = async (req, res) => {
   const { userId } = req.params;
   const { otp } = req.body;
-  let userDetails = {
-    UserRole: 'not found',
-    Name: 'not found',
-    Email: 'not found',
-    UserId: userId || 'not found',
-    objectId: 'not found',
-    TenantId: 'not found',
-  };
   if (!userId) return res.status(404).send('Missing userId parameter.');
 
   try {
@@ -345,14 +317,6 @@ export const deleteUserPost = async (req, res) => {
 export const deleteUserByAdmin = async (req, res) => {
   const sessiontoken = req.headers.sessiontoken;
   const userId = req.params.userId;
-  let userDetails = {
-    UserRole: 'not found',
-    Name: 'not found',
-    Email: 'not found',
-    UserId: userId || 'not found',
-    objectId: 'not found',
-    TenantId: 'not found',
-  };
   if (!sessiontoken) return res.status(400).json({ message: 'unauthorized.' });
   if (!userId || userId === ':userId') {
     return res.status(400).json({ message: 'Missing userId parameter.' });

@@ -6,7 +6,6 @@ export default async function saveFile(request) {
     throw new Parse.Error(Parse.Error.INVALID_QUERY, 'Please provide file.');
   }
   const fileBase64 = request.params.fileBase64;
-  const id = request.params.id;
   try {
     if (request.user) {
       const extCls = new Parse.Query('contracts_Users');
@@ -15,7 +14,6 @@ export default async function saveFile(request) {
       extCls.include('UserId');
       const resExt = await extCls.first({ useMasterKey: true });
       if (resExt) {
-        const _resExt = JSON.parse(JSON.stringify(resExt));
         const fileName = request.params.fileName;
         const ext = request.params.fileName?.split('.')?.pop();
         let mimeType;

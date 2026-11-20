@@ -1,5 +1,6 @@
 import { smtpenable, updateMailCount } from '../../Utils.js';
 import { escapeHtml, renderEmailHeading, resolveBrandContext } from '../../utils/brandContext.js';
+import { issueOtp } from './otp.js';
 async function getDocument(docId) {
   try {
     const query = new Parse.Query('contracts_Document');
@@ -20,16 +21,20 @@ async function getDocument(docId) {
 }
 async function sendMailOTPv1(request) {
   try {
-    let code = Math.floor(1000 + Math.random() * 9000);
-    let email = request.params.email;
-    let TenantId = request.params.TenantId ? request.params.TenantId : undefined;
+    const email = request.params.email;
+    const TenantId = request.params.TenantId ? request.params.TenantId : undefined;
     const documentOwner = request.params?.docId
       ? await getDocument(request.params.docId)
       : undefined;
     const brand = resolveBrandContext({});
     const AppName = brand.productName;
 
-    if (email) {
+    if (typeof email === 'string' && email) {
+      const code = await issueOtp(email, TenantId);
+      if (code === null) {
+        // No new code: one was emailed moments ago, or the email is paused after wrong guesses.
+        return 'Otp send';
+      }
       const recipient = request.params.email;
       const mailsender = smtpenable ? process.env.SMTP_USER_EMAIL : process.env.MAILGUN_SENDER;
       try {
@@ -43,33 +48,11 @@ async function sendMailOTPv1(request) {
             code +
             '</p></div></div></div></body></html>',
         });
-        console.log('OTP sent', code);
         if (documentOwner?.objectId) {
           updateMailCount(documentOwner.objectId);
         }
       } catch (err) {
         console.log('error in send OTP mail', err);
-      }
-      const tempOtp = new Parse.Query('defaultdata_Otp');
-      tempOtp.equalTo('Email', email);
-      const resultOTP = await tempOtp.first({ useMasterKey: true });
-      // console.log('resultOTP', resultOTP);
-      if (resultOTP !== undefined) {
-        const updateOtpQuery = new Parse.Query('defaultdata_Otp');
-        const updateOtp = await updateOtpQuery.get(resultOTP.id, {
-          useMasterKey: true,
-        });
-        updateOtp.set('OTP', code);
-        updateOtp.save(null, { useMasterKey: true });
-        //   console.log("update otp Res in tempSendOtp ", updateRes);
-      } else {
-        const otpClass = Parse.Object.extend('defaultdata_Otp');
-        const newOtpQuery = new otpClass();
-        newOtpQuery.set('OTP', code);
-        newOtpQuery.set('Email', email);
-        newOtpQuery.set('TenantId', TenantId);
-        await newOtpQuery.save(null, { useMasterKey: true });
-        //   console.log("new otp Res in tempSendOtp ", newRes);
       }
       return 'Otp send';
     } else {

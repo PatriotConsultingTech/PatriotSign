@@ -20,7 +20,7 @@ export default async function createDuplicate(request) {
         const _templateRes = JSON.parse(JSON.stringify(templateRes));
         const newTemplate = new Parse.Object('contracts_Template');
 
-        let signers = [];
+        const signers = [];
         if (_templateRes.Signers?.length > 0) {
           _templateRes.Signers?.forEach(x => {
             if (x.objectId) {

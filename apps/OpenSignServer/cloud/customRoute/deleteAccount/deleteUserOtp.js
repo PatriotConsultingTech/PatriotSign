@@ -30,7 +30,7 @@ export const deleteUserOtp = async (req, res) => {
   const expiresAt = new Date(now + OTP_EXPIRES_MIN * 60 * 1000);
 
   try {
-    const resp = await sendDeleteOtpEmail(extUser, otp);
+    await sendDeleteOtpEmail(extUser, otp);
     extUser.set('DeleteOTP', otp);
     extUser.set('DeleteOTPExpiry', expiresAt);
     extUser.set('DeleteOTPSentAt', new Date(now));

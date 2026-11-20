@@ -20,7 +20,7 @@ import { format, toZonedTime } from "date-fns-tz";
 
 import i18n from "../i18n";
 import { persistBrandPresentation } from "./brandPresentation";
-import { getRuntimePdfFontUrl } from "./runtimeConfig";
+import { getRuntimeConfig, getRuntimePdfFontUrl } from "./runtimeConfig";
 import { renderMailBrandLogo, resolveMailBrandPresentation } from "./mailBrand";
 import {
   applyNumberFormulasToPages,
@@ -1529,7 +1529,7 @@ export const addInitialData = (signerPos, setXyPosition, value, userId) => {
 
 //function for embed document id
 export const embedDocId = async (pdfOriginalWH, pdfDoc, documentId) => {
-  const appName = "OpenSign™";
+  const appName = "PatriotSign";
   // `fontBytes` is used to embed custom font in pdf
   const pdfFontUrl = getRuntimePdfFontUrl();
   if (!pdfFontUrl) throw new Error("A PDF font URL is required.");
@@ -2611,13 +2611,13 @@ export const embedWidgetsToDoc = async (
     }
     form?.flatten();
   }
+  const supportContact = (getRuntimeConfig().urls.support || "").replace(/^mailto:/, "");
   if (!hasError) {
     const pdfBytes = await pdfDoc.saveAsBase64({ useObjectStreams: false });
     return pdfBytes;
   } else {
     return {
-      error:
-        "This pdf is not compatible with opensign please contact <support@opensignlabs.com>"
+      error: `This pdf is not compatible with PatriotSign${supportContact ? ` please contact ${supportContact}` : ""}.`
     };
   }
 };
@@ -2670,6 +2670,7 @@ export const contactBook = async (objectId) => {
     const result = axiosRes?.data?.results;
     return result;
   } catch (error) {
+    // eslint-disable-next-line no-undef -- real defect: catch binds `error`, not `err` (see report)
     console.error("contracts_Contactbook error", err);
     return "Error: Something went wrong!";
   }
@@ -2870,11 +2871,11 @@ export const getAppLogo = async () => {
     if (tenant) {
       const resolvedFavicon =
         tenant?.favicon || tenant?.logo || appInfo.fev_Icon;
-      localStorage.setItem("appname", "OpenSign™");
+      localStorage.setItem("appname", "PatriotSign");
       localStorage.setItem("favicon", appInfo.fev_Icon);
       persistBrandPresentation(
         {
-          appName: tenant?.appname || "OpenSign™",
+          appName: tenant?.appname || "PatriotSign",
           logo: tenant?.logo || appInfo.applogo,
           favicon: resolvedFavicon
         },
@@ -3145,7 +3146,7 @@ export const handleToPrint = async (event, setIsDownloading, pdfDetails) => {
 };
 const downloadCertificate = async (certificate, isZip, asBlob) => {
   try {
-    const appName = "OpenSign™";
+    const appName = "PatriotSign";
     const certificateUrl = certificate;
     if (isZip) {
       return certificateUrl;

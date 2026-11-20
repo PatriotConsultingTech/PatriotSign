@@ -11,6 +11,11 @@ import {
   saveLanguageInLocal
 } from "../constant/Utils";
 import { useTranslation } from "react-i18next";
+import { getRuntimeConfig } from "../constant/runtimeConfig";
+import {
+  hasExplicitRuntimeConfig,
+  resolveRuntimeUrls
+} from "../constant/deploymentRuntime";
 import { appInfo } from "../constant/appinfo";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSidebar } from "../redux/reducers/sidebarReducer";
@@ -19,6 +24,9 @@ import InlineMarkdown from "./InlineMarkdown";
 import { resolveAnnouncementTranslation } from "../constant/announcement";
 
 const Header = ({ isConsole, setIsLoggingOut }) => {
+  const docsUrl = resolveRuntimeUrls(getRuntimeConfig(), {
+    explicit: hasExplicitRuntimeConfig()
+  }).docs;
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { width } = useWindowSize();
@@ -213,22 +221,17 @@ const Header = ({ isConsole, setIsLoggingOut }) => {
             >
               {!isConsole && (
                 <>
+                  {docsUrl && (
                     <li>
                       <button
                         type="button"
                         className="w-full text-left"
-                        onClick={() =>
-                          openInNewTab(
-                            getDeploymentLink(
-                              "docs",
-                              "https://docs.opensignlabs.com"
-                            )
-                          )
-                        }
+                        onClick={() => openInNewTab(docsUrl)}
                       >
                         <i className="fa-light fa-book"></i> {t("docs")}
                       </button>
                     </li>
+                  )}
                   <li>
                     <button
                       type="button"

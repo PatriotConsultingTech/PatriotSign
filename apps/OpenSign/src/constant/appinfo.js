@@ -27,12 +27,12 @@ export function serverUrl_fn() {
   return baseUrl;
 }
 export const appInfo = {
+  // eslint-disable-next-line no-undef -- guarded by typeof; defaultLogo is never declared in this module
   applogo: typeof defaultLogo !== "undefined" ? defaultLogo : logo,
   appId: process.env.REACT_APP_APPID ? process.env.REACT_APP_APPID : "opensign",
   baseUrl: serverUrl_fn(),
   defaultRole: "contracts_User",
-  fev_Icon:
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAALlJREFUaEPtmN0NwjAMBpNxYDKYiM1Yp90g93CKStH1NbIdfz921Dker2Pc+Js1cDF7MXAxASMGYkAigBI6vh9ZwoXP53uZoAYcvhwdA3mAVbI2aSb+9zFKU4IURB6j/HoPUIEa2G3iGIAhQQDlAUIoE2diabIklISS0NoFPebo77RF6OenEF3QntOm128he0GKrwHyACFoz2MgBqSGkpAEcHs47oHtN5AFakACqMNjQEMoE8SABFCHn4HE2zGHSLeEAAAAAElFTkSuQmCC",
+  fev_Icon: "/favicon.png",
   googleClientId:
     runtimeConfig.auth.googleClientId ||
     (runtimeConfig.brandKey === "opensign" &&
@@ -40,7 +40,7 @@ export const appInfo = {
       ? `${process.env.REACT_APP_GOOGLECLIENTID}`
       : ""),
   metaDescription:
-    "The fastest way to sign PDFs & request signatures from others.",
+    "PatriotSign: document signing by Patriot Consulting",
   settings: [
     {
       role: "contracts_Admin",

@@ -28,7 +28,6 @@ export default async function forwardDoc(request) {
       const docName = _docRes.Name;
       const extUserId = _docRes?.ExtUserPtr?.objectId;
       const brand = resolveBrandContext({});
-      const TenantAppName = brand.productName;
       const from = _docRes?.SenderName || _docRes?.ExtUserPtr?.Email;
       const replyTo = _docRes?.SenderMail || _docRes?.ExtUserPtr?.Email;
       const senderName = _docRes?.SenderName || _docRes?.ExtUserPtr?.Name;
@@ -36,7 +35,7 @@ export default async function forwardDoc(request) {
       try {
         let mailRes;
         for (let i = 0; i < recipients.length; i++) {
-          let params = {
+          const params = {
             extUserId: extUserId,
             pdfName: docName,
             url: _docRes?.SignedUrl || '',

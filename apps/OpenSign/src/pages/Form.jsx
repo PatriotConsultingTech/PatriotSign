@@ -53,7 +53,7 @@ function Form() {
 
 const Forms = (props) => {
   const appName =
-    "OpenSign™";
+    "PatriotSign";
   const { t } = useTranslation();
   const abortController = new AbortController();
   const inputFileRef = useRef(null);
