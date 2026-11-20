@@ -1376,7 +1376,7 @@ function WidgetsValueModal(props) {
             )}
           </div>
         );
-      case "checkbox":
+      case "checkbox": {
         const checkBoxLayout =
           currWidgetsDetails?.options?.layout || "vertical";
         const isMultipleCheckbox =
@@ -1432,6 +1432,7 @@ function WidgetsValueModal(props) {
             ))}
           </div>
         );
+      }
       case textInputWidget:
         return (
           <TextInput
@@ -1585,7 +1586,7 @@ function WidgetsValueModal(props) {
             className={textInputcls}
           />
         );
-      case radioButtonWidget:
+      case radioButtonWidget: {
         const radioLayout = currWidgetsDetails.options?.layout || "vertical";
         const isOnlyOneBtn =
           currWidgetsDetails.options?.values?.length > 0 ? true : false;
@@ -1628,6 +1629,7 @@ function WidgetsValueModal(props) {
             })}
           </div>
         );
+      }
       case textWidget:
         return (
           <TextInput
@@ -1771,7 +1773,7 @@ function WidgetsValueModal(props) {
         regexValidation = /^(?!000|666|9\d{2})\d{3}-(?!00)\d{2}-(?!0000)\d{4}$/;
         validateExpression(regexValidation);
         break;
-      default:
+      default: {
         // Grab the current pattern (if it exists)
         const pattern = currWidgetsDetails?.options?.validation?.pattern;
         // Removed `backwordSupportPattern` (/^[a-zA-Z0-9s]+$/) — it blocked spaces and special characters.
@@ -1780,6 +1782,7 @@ function WidgetsValueModal(props) {
         regexValidation = backwordSupportPattern || "";
         validateExpression(regexValidation);
         break;
+      }
     }
   };
 
@@ -1910,11 +1913,11 @@ function WidgetsValueModal(props) {
           uploadStamp: !image
         };
         // First check conditions based on widget type
-        if (type && conditions.hasOwnProperty(type)) {
+        if (type && Object.prototype.hasOwnProperty.call(conditions, type)) {
           return conditions[type];
         }
         //If type doesn't match, check based on active tab
-        if (isTab && conditions.hasOwnProperty(isTab)) {
+        if (isTab && Object.prototype.hasOwnProperty.call(conditions, isTab)) {
           return conditions[isTab];
         }
 
