@@ -27,6 +27,7 @@ export function serverUrl_fn() {
   return baseUrl;
 }
 export const appInfo = {
+  // eslint-disable-next-line no-undef -- guarded by typeof; defaultLogo is never declared in this module
   applogo: typeof defaultLogo !== "undefined" ? defaultLogo : logo,
   appId: process.env.REACT_APP_APPID ? process.env.REACT_APP_APPID : "opensign",
   baseUrl: serverUrl_fn(),

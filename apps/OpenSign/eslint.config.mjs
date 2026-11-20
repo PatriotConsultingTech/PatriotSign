@@ -10,7 +10,8 @@ export default [
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
-      globals: globals.browser,
+      // process: vite define replaces process.env at build time, so the identifier is provided at runtime.
+      globals: { ...globals.browser, process: "readonly" },
       parserOptions: {
         ecmaFeatures: { jsx: true },
       },
@@ -20,11 +21,7 @@ export default [
     },
     rules: {
       "react/prop-types": "off",
-      "no-unused-vars": "off",
-      "no-empty": "off",
-      "no-case-declarations": "off",
-      "react/no-deprecated": "off",
-      "no-undef": "off",
+      "no-unused-vars": "warn",
     },
   },
 ];
