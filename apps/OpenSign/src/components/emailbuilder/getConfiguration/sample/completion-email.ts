@@ -16,7 +16,7 @@ const getCompletionEmail = (
               props: {
                 width: null,
                 height: 50,
-                url: "https://qikinnovation.ams3.digitaloceanspaces.com/logo.png",
+                url: "/patriot-consulting-primary-logo.png",
                 alt: "logo",
                 linkHref: null,
                 contentAlignment: "middle"

@@ -278,19 +278,6 @@ const AddAdmin = () => {
                   <h2 className="text-[30px] text-center mt-3 font-medium">
                     {t("opensign-setup", { appName })}
                   </h2>
-                  <NavLink
-                    to="https://discord.com/invite/xe9TDuyAyj"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-center text-sm mt-1 text-[blue] cursor-pointer"
-                  >
-                    {t("join-discord")}
-                    <i
-                      aria-hidden="true"
-                      className="fa-brands fa-discord ml-1"
-                    ></i>
-                    {/* <span className="fa-sr-only">OpenSign&apos;s Discord</span> */}
-                  </NavLink>
                   <div className="px-6 py-3 text-xs">
                     <label className="block ">
                       {t("name")}{" "}
@@ -450,13 +437,17 @@ const AddAdmin = () => {
                       >
                         {t("agree")}
                       </label>
-                      <span
-                        className="underline cursor-pointer ml-1"
-                        onClick={() => termsUrl && openInNewTab(termsUrl)}
-                      >
-                        {t("term")}
-                      </span>
-                      <span>.</span>
+                      {termsUrl && (
+                        <>
+                          <span
+                            className="underline cursor-pointer ml-1"
+                            onClick={() => openInNewTab(termsUrl)}
+                          >
+                            {t("term")}
+                          </span>
+                          <span>.</span>
+                        </>
+                      )}
                     </div>
                   </div>
                   <div className="mx-4 text-center text-xs font-bold mb-3">
