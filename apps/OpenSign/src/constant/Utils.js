@@ -20,7 +20,7 @@ import { format, toZonedTime } from "date-fns-tz";
 
 import i18n from "../i18n";
 import { persistBrandPresentation } from "./brandPresentation";
-import { getRuntimePdfFontUrl } from "./runtimeConfig";
+import { getRuntimeConfig, getRuntimePdfFontUrl } from "./runtimeConfig";
 import { renderMailBrandLogo, resolveMailBrandPresentation } from "./mailBrand";
 import {
   applyNumberFormulasToPages,
@@ -2611,13 +2611,13 @@ export const embedWidgetsToDoc = async (
     }
     form?.flatten();
   }
+  const supportContact = (getRuntimeConfig().urls.support || "").replace(/^mailto:/, "");
   if (!hasError) {
     const pdfBytes = await pdfDoc.saveAsBase64({ useObjectStreams: false });
     return pdfBytes;
   } else {
     return {
-      error:
-        "This pdf is not compatible with opensign please contact <support@opensignlabs.com>"
+      error: `This pdf is not compatible with PatriotSign${supportContact ? ` please contact ${supportContact}` : ""}.`
     };
   }
 };
