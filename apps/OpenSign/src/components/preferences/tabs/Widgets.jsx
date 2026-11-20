@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Parse from "parse";
 import { dateFormat, formatDate, withSessionValidation } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";

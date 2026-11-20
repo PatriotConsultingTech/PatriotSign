@@ -271,7 +271,7 @@ function PlaceholderType(props) {
           )}
         </div>
       );
-    case "checkbox":
+    case "checkbox": {
       const checkBoxLayout = props.pos.options?.layout || "vertical";
       const isMultipleCheckbox =
         props.pos.options?.values?.length > 0 ? true : false;
@@ -338,6 +338,7 @@ function PlaceholderType(props) {
           ))}
         </div>
       );
+    }
     case textInputWidget:
       return props.isSignYourself || iswidgetEnable ? (
         <textarea
@@ -599,7 +600,7 @@ function PlaceholderType(props) {
           <span className="ml-0.5">{formatWidgetName()}</span>
         </div>
       );
-    case radioButtonWidget:
+    case radioButtonWidget: {
       const radioLayout = props.pos.options?.layout || "vertical";
       const isOnlyOneBtn = props.pos.options?.values?.length > 0 ? true : false;
       const radioSize = parseFloat(fontSize);
@@ -664,6 +665,7 @@ function PlaceholderType(props) {
           ))}
         </div>
       );
+    }
     case textWidget:
       return (
         <textarea
