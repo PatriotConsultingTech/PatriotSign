@@ -10,10 +10,7 @@ const runtimeConfig = getRuntimeConfig();
 const runtimeUrls = resolveRuntimeUrls(runtimeConfig, {
   explicit: hasExplicitRuntimeConfig()
 });
-const templateHelpUrl = resolveRuntimeLink(
-  runtimeUrls.docs,
-  "https://docs.opensignlabs.com/docs/help/Templates/manage-templates"
-);
+const templateHelpUrl = resolveRuntimeLink(runtimeUrls.docs, "");
 
 export const templateReportTour = [
   {

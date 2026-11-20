@@ -1,11 +1,16 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import ModalUi from "../../primitives/ModalUi";
+import { getRuntimeConfig } from "../../constant/runtimeConfig";
 
 function AgreementContent(props) {
   const { t } = useTranslation();
   const appName =
     "PatriotSign";
+  const supportContact = (getRuntimeConfig().urls.support || "").replace(
+    /^mailto:/,
+    ""
+  );
   const h2Style = "text-base-content font-medium text-lg";
   const ulStyle = "list-disc px-4 py-3";
   const handleOnclick = () => {
@@ -96,19 +101,12 @@ function AgreementContent(props) {
             {t("term-cond-p28", { appName: appName })}
           </span>
               <hr className="bg-[#9f9f9f] w-full my-[15px]" />
-              <span className="mt-2">
-                {t("term-cond-p29", { appName: appName })}
-              </span>
-              <a
-                href="www.opensignlabs.com"
-                target="_blank"
-                className="text-blue-700 cursor-pointer"
-              >
-                www.opensignlabs.com
-              </a>
-
-              <span>{t("term-cond-p30")}</span>
-              <span className="font-medium"> support@opensignlabs.com </span>
+              {supportContact && (
+                <span className="mt-2">
+                  <span>{t("term-cond-p30")}</span>
+                  <span className="font-medium"> {supportContact} </span>
+                </span>
+              )}
           <hr className="bg-[#9f9f9f] w-full my-[15px]" />
           <div className="mt-6 flex justify-start gap-2">
             <button

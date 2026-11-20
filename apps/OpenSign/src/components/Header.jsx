@@ -219,10 +219,7 @@ const Header = ({ isConsole, setIsLoggingOut }) => {
                         className="w-full text-left"
                         onClick={() =>
                           openInNewTab(
-                            getDeploymentLink(
-                              "docs",
-                              "https://docs.opensignlabs.com"
-                            )
+                            getDeploymentLink("docs", "")
                           )
                         }
                       >

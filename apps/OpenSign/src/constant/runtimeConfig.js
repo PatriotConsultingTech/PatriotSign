@@ -63,8 +63,8 @@ export const OPEN_SIGN_RUNTIME_CONFIG = Object.freeze({
     logoUrl: "",
     darkLogoUrl: "",
     faviconUrl: "",
-    fontCssUrl: "https://cdn.opensignlabs.com/fonts.css",
-    pdfFontUrl: "https://cdn.opensignlabs.com/webfonts/times.ttf"
+    fontCssUrl: "",
+    pdfFontUrl: ""
   },
   theme: {
     light: {},
@@ -85,21 +85,21 @@ export const OPEN_SIGN_RUNTIME_CONFIG = Object.freeze({
   regionTargets: [],
   features: {
     hostedSignup: true,
-    regionSelector: true,
-    appSwitcher: true,
+    regionSelector: false,
+    appSwitcher: false,
     publicProfiles: true,
     embedding: true,
     googleAuth: true,
     dropbox: true,
     passkeys: true,
     sso: true,
-    openSignDocs: true,
-    openSignSocials: true,
+    openSignDocs: false,
+    openSignSocials: false,
     trialHandoff: false
   },
   analytics: {
     gtmId: "",
-    googleTagIds: ["G-BHNNETZRTY", "AW-17487135887"]
+    googleTagIds: []
   },
   auth: {
     googleClientId: "",

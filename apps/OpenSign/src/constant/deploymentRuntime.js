@@ -1,21 +1,19 @@
+// Hosted-product links are empty by default; deployments set them in runtime configuration.
 const OPEN_SIGN_URLS = Object.freeze({
-  github: "https://github.com/OpenSignLabs/OpenSign",
-  docs: "https://docs.opensignlabs.com",
-  support: "mailto:support@opensignlabs.com",
-  terms: "https://www.opensignlabs.com/terms-and-conditions",
-  privacy: "https://www.opensignlabs.com/privacy-policy",
-  sandbox: "https://sandbox.opensignlabs.com"
+  github: "",
+  docs: "",
+  support: "",
+  terms: "",
+  privacy: "",
+  sandbox: ""
 });
 
-const OPEN_SIGN_REGION_TARGETS = Object.freeze([
-  { region: "global", url: "https://app.opensignlabs.com" },
-  { region: "europe", url: "https://eu-app.opensignlabs.com" }
-]);
+const OPEN_SIGN_REGION_TARGETS = Object.freeze([]);
 
 const OPEN_SIGN_PUBLIC_PROFILES = Object.freeze({
-  global: "https://opensign.me",
-  europe: "https://eu.opensign.me",
-  staging: "https://staging.opensign.me"
+  global: "",
+  europe: "",
+  staging: ""
 });
 
 export function hasExplicitRuntimeConfig(value = window?.RUNTIME_CONFIG) {
