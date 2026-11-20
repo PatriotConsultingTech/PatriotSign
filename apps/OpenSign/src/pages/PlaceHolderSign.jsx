@@ -1823,9 +1823,6 @@ function PlaceHolderSign() {
 
   const handleEditDocumentForm = async (data) => {
     setIsEditDoc(false);
-    if (Array.isArray(data?.QualifiedSignatureConfig)) {
-      setQesDocConfig(data.QualifiedSignatureConfig);
-    }
     const updateDocument = pdfDetails.map((x) => {
       return { ...x, ...data };
     });
