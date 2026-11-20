@@ -1713,7 +1713,7 @@ function PlaceHolderSign() {
   const handleOnchangeRequest = () => {
     if (editorRef.current) {
       const html = editorRef.current.editor.root.innerHTML;
-      setRequestBody(html);
+      setDefaultMail((prev) => ({ ...prev, body: html }));
     }
   };
   const signerAssignTour = [
