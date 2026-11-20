@@ -4287,7 +4287,7 @@ export const mailTemplate = (param) => {
     param.note +
     "</td></tr><tr><td></td><td></td></tr></table></div> <div style='margin-left:70px'><a target=_blank href=" +
     param.signingUrl +
-    "><button style='padding:12px;background-color:#d46b0f;color:white;border:0px;font-weight:bold;margin-top:30px'>Sign here</button></a></div><div style='display:flex;justify-content:center;margin-top:10px'></div></div></div><div><p> This is an automated email from " +
+    "><button style='padding:12px;background-color:#00477B;color:white;border:0px;font-weight:bold;margin-top:30px'>Sign here</button></a></div><div style='display:flex;justify-content:center;margin-top:10px'></div></div></div><div><p> This is an automated email from " +
     appName +
     ". For any queries regarding this email, please contact the sender " +
     param.senderMail +
