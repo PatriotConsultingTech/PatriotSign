@@ -54,7 +54,7 @@ const googleTagManagerId = z
 export const OPEN_SIGN_RUNTIME_CONFIG = Object.freeze({
   schemaVersion: 1,
   brandKey: "opensign",
-  productName: "OpenSign™",
+  productName: "PatriotSign",
   metaDescription: "",
   environment: "production",
   region: "global",
@@ -63,8 +63,8 @@ export const OPEN_SIGN_RUNTIME_CONFIG = Object.freeze({
     logoUrl: "",
     darkLogoUrl: "",
     faviconUrl: "",
-    fontCssUrl: "https://cdn.opensignlabs.com/fonts.css",
-    pdfFontUrl: "https://cdn.opensignlabs.com/webfonts/times.ttf"
+    fontCssUrl: "",
+    pdfFontUrl: "/fonts/LiberationSerif-Regular.ttf"
   },
   theme: {
     light: {},
@@ -85,21 +85,21 @@ export const OPEN_SIGN_RUNTIME_CONFIG = Object.freeze({
   regionTargets: [],
   features: {
     hostedSignup: true,
-    regionSelector: true,
-    appSwitcher: true,
+    regionSelector: false,
+    appSwitcher: false,
     publicProfiles: true,
     embedding: true,
     googleAuth: true,
     dropbox: true,
     passkeys: true,
     sso: true,
-    openSignDocs: true,
-    openSignSocials: true,
+    openSignDocs: false,
+    openSignSocials: false,
     trialHandoff: false
   },
   analytics: {
     gtmId: "",
-    googleTagIds: ["G-BHNNETZRTY", "AW-17487135887"]
+    googleTagIds: []
   },
   auth: {
     googleClientId: "",
@@ -137,7 +137,7 @@ const DISABLED_RUNTIME_ASSETS = Object.freeze({
   darkLogoUrl: "",
   faviconUrl: "",
   fontCssUrl: "",
-  pdfFontUrl: ""
+  pdfFontUrl: "/fonts/LiberationSerif-Regular.ttf"
 });
 
 const DISABLED_RUNTIME_AUTH = Object.freeze({
@@ -352,8 +352,8 @@ const createRuntimeConfigSchema = (
       brandKey: withFallback(slug, "opensign").default("opensign"),
       productName: withFallback(
         z.string().trim().min(1).max(80),
-        "OpenSign™"
-      ).default("OpenSign™"),
+        "PatriotSign"
+      ).default("PatriotSign"),
       metaDescription: withFallback(z.string().trim().max(240), "").default(""),
       environment: withFallback(slug, "production").default("production"),
       region: withFallback(slug, "global").default("global"),

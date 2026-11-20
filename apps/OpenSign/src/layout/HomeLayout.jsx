@@ -27,7 +27,7 @@ import {
 
 const HomeLayout = () => {
   const appName =
-    "OpenSign™";
+    "PatriotSign";
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const isEditorRoute = [

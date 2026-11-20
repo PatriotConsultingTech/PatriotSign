@@ -1,18 +1,10 @@
-@font-face {
-  font-family: "Bricolage Grotesque";
-  font-style: normal;
-  font-weight: 500 700;
-  font-display: swap;
-  src: url("./fonts/bricolage-grotesque-latin.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 400 700;
-  font-display: swap;
-  src: url("./fonts/dm-sans-latin.woff2") format("woff2");
-}
+/* Patriot brand fonts: self-hosted from npm (no third-party CDN) */
+@import "@fontsource/montserrat/latin-400.css";
+@import "@fontsource/montserrat/latin-600.css";
+@import "@fontsource/montserrat/latin-700.css";
+@import "@fontsource/open-sans/latin-400.css";
+@import "@fontsource/open-sans/latin-600.css";
+@import "@fontsource/open-sans/latin-700.css";
 
 @font-face {
   font-family: "Cedarville Cursive";

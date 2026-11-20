@@ -37,8 +37,8 @@ export const RenderReportCell = ({
 }) => {
   const { t } = useTranslation();
   const appName =
-    "OpenSign™";
-  const drivename = appName === "OpenSign™" ? "OpenSign™" : "";
+    "PatriotSign";
+  const drivename = appName === "PatriotSign" ? "PatriotSign" : "";
   switch (col) {
     case "Sr.No":
       return (

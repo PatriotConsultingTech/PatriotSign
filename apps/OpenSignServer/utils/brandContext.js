@@ -1,7 +1,6 @@
-const OPEN_SIGN_NAME = 'OpenSign™';
-const OPEN_SIGN_EMAIL_LOGO = 'https://qikinnovation.ams3.digitaloceanspaces.com/logo.png';
-const OPEN_SIGN_ACCENT = '#47a3ad';
-const OPEN_SIGN_PDF_FONT = 'https://cdn.opensignlabs.com/webfonts/times.ttf';
+const OPEN_SIGN_NAME = 'PatriotSign';
+const PATRIOT_LOGO_PATH = '/patriot-consulting-primary-logo.png';
+const OPEN_SIGN_ACCENT = '#00477B';
 
 const readValue = (value, key) => {
   if (!value) return undefined;
@@ -82,8 +81,13 @@ export function resolveDeploymentBrand(env = process.env) {
   const explicitEmailLogo = parseHttpUrl(
     configured('APP_EMAIL_LOGO_URL', profile?.assets?.emailLogoUrl)
   );
+  // Default email logo is served from this app's own public folder; empty when the public URL is unknown.
+  const canonicalAppUrl = parseHttpUrl(env.APP_CANONICAL_URL);
   const emailLogoUrl =
-    explicitEmailLogo || (isOpenSign && productName === OPEN_SIGN_NAME ? OPEN_SIGN_EMAIL_LOGO : '');
+    explicitEmailLogo ||
+    (isOpenSign && canonicalAppUrl && productName === OPEN_SIGN_NAME
+      ? new URL(PATRIOT_LOGO_PATH, canonicalAppUrl).toString()
+      : '');
   const accentFallback = isOpenSign ? OPEN_SIGN_ACCENT : '#334155';
   const deploymentId =
     cleanText(env.APP_DEPLOYMENT_ID, '', 80) ||
@@ -115,7 +119,7 @@ export function resolveDeploymentBrand(env = process.env) {
       ),
       pdfFontUrl:
         parseHttpUrl(configured('APP_PDF_FONT_URL', profile?.assets?.pdfFontUrl)) ||
-        (isOpenSign ? OPEN_SIGN_PDF_FONT : ''),
+        (canonicalAppUrl ? new URL('/fonts/LiberationSerif-Regular.ttf', canonicalAppUrl).toString() : ''),
       useBundledCertificateLogo:
         isOpenSign && productName === OPEN_SIGN_NAME && !env.APP_CERTIFICATE_LOGO_URL,
     }),
@@ -126,32 +130,32 @@ export function resolveDeploymentBrand(env = process.env) {
       ),
       certificatePrimary: parseColor(
         configured('APP_CERTIFICATE_PRIMARY_COLOR', profile?.colors?.certificatePrimary),
-        isOpenSign ? '#003366' : '#334155'
+        isOpenSign ? '#00477B' : '#334155'
       ),
     }),
     contacts: Object.freeze({
       supportEmail: parseEmail(
         configured(
           'APP_SUPPORT_EMAIL',
-          profile?.contacts?.supportEmail ?? (isOpenSign ? 'support@opensignlabs.com' : '')
+          profile?.contacts?.supportEmail ?? ''
         )
       ),
       complaintsEmail: parseEmail(
         configured(
           'APP_COMPLAINTS_EMAIL',
-          profile?.contacts?.complaintsEmail ?? (isOpenSign ? 'complaints@opensignlabs.com' : '')
+          profile?.contacts?.complaintsEmail ?? ''
         )
       ),
       abuseEmail: parseEmail(
         configured(
           'APP_ABUSE_EMAIL',
-          profile?.contacts?.abuseEmail ?? (isOpenSign ? 'abuse@opensignlabs.com' : '')
+          profile?.contacts?.abuseEmail ?? ''
         )
       ),
       billingEmail: parseEmail(
         configured(
           'APP_BILLING_EMAIL',
-          profile?.contacts?.billingEmail ?? (isOpenSign ? 'hello@opensignlabs.com' : '')
+          profile?.contacts?.billingEmail ?? ''
         )
       ),
     }),
@@ -161,15 +165,13 @@ export function resolveDeploymentBrand(env = process.env) {
       terms: parseHttpUrl(
         configured(
           'APP_TERMS_URL',
-          profile?.urls?.terms ??
-            (isOpenSign ? 'https://www.opensignlabs.com/terms-and-conditions' : '')
+          profile?.urls?.terms ?? ''
         )
       ),
       privacy: parseHttpUrl(
         configured(
           'APP_PRIVACY_URL',
-          profile?.urls?.privacy ??
-            (isOpenSign ? 'https://www.opensignlabs.com/privacy-policy' : '')
+          profile?.urls?.privacy ?? ''
         )
       ),
     }),
@@ -185,7 +187,7 @@ export function resolveDeploymentBrand(env = process.env) {
           profile?.digitalSignature?.contact ||
             configured(
               'APP_SUPPORT_EMAIL',
-              profile?.contacts?.supportEmail ?? (isOpenSign ? 'hello@opensignlabs.com' : '')
+              profile?.contacts?.supportEmail ?? ''
             )
         )
       ),
@@ -219,37 +221,6 @@ export function resolveBrandContext({ tenant, deployment, document, env = proces
 export function renderEmailLogo(context, { padding = false } = {}) {
   const logoUrl = parseHttpUrl(context?.assets?.emailLogoUrl);
   if (!logoUrl) return '';
-  if (
-    context?.isOpenSign &&
-    context?.productName === OPEN_SIGN_NAME &&
-    logoUrl === OPEN_SIGN_EMAIL_LOGO
-  ) {
-    return `<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;background:#ffffff;">
-  <tr>
-    <td style="padding:10px 14px;background:#ffffff;">
-      <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td valign="middle" style="padding-right:8px;">
-            <table role="presentation" width="53" height="53" cellpadding="0" cellspacing="0" border="0" style="width:53px;height:53px;border:8px solid #0b326b;">
-              <tr>
-                <td align="center" valign="middle">
-                  <table role="presentation" width="20" height="20" cellpadding="0" cellspacing="0" border="0" style="width:20px;height:20px;background:#0b326b;">
-                    <tr><td style="font-size:0;line-height:0;">&nbsp;</td></tr>
-                  </table>
-                </td>
-              </tr>
-            </table>
-          </td>
-          <td valign="middle">
-            <div style="font-family:Arial,Helvetica,sans-serif;font-size:35px;line-height:38px;font-weight:700;letter-spacing:-1.5px;color:#080b10;">OpenSign</div>
-            <div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;line-height:18px;letter-spacing:.4px;color:#173d72;text-align:center;">Seal the Deal, Openly</div>
-          </td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>`;
-  }
   const style = padding ? " style='padding:20px'" : '';
   return `<img src='${escapeHtml(logoUrl)}' height='50'${style}/>`;
 }
@@ -345,7 +316,7 @@ export async function fetchBrandImage(
 
 export const OPEN_SIGN_BRAND_DEFAULTS = Object.freeze({
   productName: OPEN_SIGN_NAME,
-  emailLogoUrl: OPEN_SIGN_EMAIL_LOGO,
+  emailLogoUrl: '',
   emailAccent: OPEN_SIGN_ACCENT,
-  pdfFontUrl: OPEN_SIGN_PDF_FONT,
+  pdfFontUrl: '',
 });
