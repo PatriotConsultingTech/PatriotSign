@@ -7,7 +7,7 @@ export default async function Newsletter(request) {
     const envAppId = 'opensign';
     const headers = { 'Content-Type': 'application/json', 'X-Parse-Application-Id': envAppId };
     const envProdServer = 'https://app.opensignlabs.com/api/app';
-    const newsletter = await axios.post(
+    await axios.post(
       `${envProdServer}/classes/Newsletter`,
       { Name: name, Email: email, Domain: domain },
       { headers: headers }

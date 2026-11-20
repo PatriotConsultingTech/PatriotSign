@@ -161,7 +161,7 @@ export function presignedlocalUrl(signedUrl, expirationTimeInSeconds) {
       const token = jwt.sign(payload, secretKey);
       // Return the signed URL containing the token
       return `${fileUrl}?token=${token}`;
-    } catch (err) {
+    } catch {
       throw new Error('Invalid or expired token.');
     }
   } else {

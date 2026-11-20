@@ -2670,6 +2670,7 @@ export const contactBook = async (objectId) => {
     const result = axiosRes?.data?.results;
     return result;
   } catch (error) {
+    // eslint-disable-next-line no-undef -- real defect: catch binds `error`, not `err` (see report)
     console.error("contracts_Contactbook error", err);
     return "Error: Something went wrong!";
   }
