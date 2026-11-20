@@ -256,10 +256,6 @@ textarea:focus-visible {
   letter-spacing: -0.04em;
 }
 
-.os-rail-copy h2 span:last-child {
-  color: #60a7d6;
-}
-
 .os-rail-copy p {
   max-width: 31ch;
   margin: 1.35rem 0 0;
