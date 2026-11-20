@@ -44,7 +44,7 @@ export default function WidgetHistoryControls({ history, asMenuItems = false }) 
         >
           <div className="flex flex-row">
             <i
-              className="fa-light fa-arrow-turn-left text-gray-500 2xl:text-[30px] mr-[3px]"
+              className="fa-light fa-arrow-rotate-left text-gray-500 2xl:text-[30px] mr-[3px]"
               aria-hidden="true"
             ></i>
             <span className="font-[500]">{t("undo")}</span>
@@ -57,7 +57,7 @@ export default function WidgetHistoryControls({ history, asMenuItems = false }) 
         >
           <div className="flex flex-row">
             <i
-              className="fa-light fa-arrow-turn-right text-gray-500 2xl:text-[30px] mr-[3px]"
+              className="fa-light fa-arrow-rotate-right text-gray-500 2xl:text-[30px] mr-[3px]"
               aria-hidden="true"
             ></i>
             <span className="font-[500]">{t("redo")}</span>
@@ -77,7 +77,7 @@ export default function WidgetHistoryControls({ history, asMenuItems = false }) 
         disabled={!canUndo}
         onClick={undo}
       >
-        <i className="fa-light fa-arrow-turn-left" aria-hidden="true" />
+        <i className="fa-light fa-arrow-rotate-left" aria-hidden="true" />
       </button>
       <button
         type="button"
@@ -87,7 +87,7 @@ export default function WidgetHistoryControls({ history, asMenuItems = false }) 
         disabled={!canRedo}
         onClick={redo}
       >
-        <i className="fa-light fa-arrow-turn-right" aria-hidden="true" />
+        <i className="fa-light fa-arrow-rotate-right" aria-hidden="true" />
       </button>
     </div>
   );

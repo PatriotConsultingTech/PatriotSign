@@ -418,37 +418,35 @@ const AddAdmin = () => {
                         </p>
                       </div>
                     )}
-                    <div className="mt-2.5 ml-1 flex flex-row items-center">
-                      <input
-                        type="checkbox"
-                        className="op-checkbox op-checkbox-sm"
-                        id="termsandcondition"
-                        checked={isAuthorize}
-                        onChange={(e) => setIsAuthorize(e.target.checked)}
-                        onInvalid={(e) =>
-                          e.target.setCustomValidity(t("input-required"))
-                        }
-                        onInput={(e) => e.target.setCustomValidity("")}
-                        required
-                      />
-                      <label
-                        className="text-xs cursor-pointer ml-1 mb-0"
-                        htmlFor="termsandcondition"
-                      >
-                        {t("agree")}
-                      </label>
-                      {termsUrl && (
-                        <>
-                          <span
-                            className="underline cursor-pointer ml-1"
-                            onClick={() => openInNewTab(termsUrl)}
-                          >
-                            {t("term")}
-                          </span>
-                          <span>.</span>
-                        </>
-                      )}
-                    </div>
+                    {termsUrl && (
+                      <div className="mt-2.5 ml-1 flex flex-row items-center">
+                        <input
+                          type="checkbox"
+                          className="op-checkbox op-checkbox-sm"
+                          id="termsandcondition"
+                          checked={isAuthorize}
+                          onChange={(e) => setIsAuthorize(e.target.checked)}
+                          onInvalid={(e) =>
+                            e.target.setCustomValidity(t("input-required"))
+                          }
+                          onInput={(e) => e.target.setCustomValidity("")}
+                          required
+                        />
+                        <label
+                          className="text-xs cursor-pointer ml-1 mb-0"
+                          htmlFor="termsandcondition"
+                        >
+                          {t("agree")}
+                        </label>
+                        <span
+                          className="underline cursor-pointer ml-1"
+                          onClick={() => openInNewTab(termsUrl)}
+                        >
+                          {t("term")}
+                        </span>
+                        <span>.</span>
+                      </div>
+                    )}
                   </div>
                   <div className="mx-4 text-center text-xs font-bold mb-3">
                     <button

@@ -383,7 +383,7 @@ function UserProfile() {
                       className={
                         editmode
                           ? "fa-light fa-arrow-rotate-left"
-                          : "fa-light fa-lock-keyhole"
+                          : "fa-light fa-lock"
                       }
                       aria-hidden="true"
                     />
@@ -470,8 +470,8 @@ function UserProfile() {
                       <i
                         className={
                           isEmailVerified
-                            ? "fa-light fa-shield-check os-profile-security-heading-icon"
-                            : "fa-light fa-shield-exclamation os-profile-security-heading-icon"
+                            ? "fa-light fa-shield-halved os-profile-security-heading-icon"
+                            : "fa-light fa-triangle-exclamation os-profile-security-heading-icon"
                         }
                         aria-hidden="true"
                       />
